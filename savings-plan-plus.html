@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Plan Plus - Savings & Investments Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Savings_files/style.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 11, 28, 0.7), rgba(0, 11, 28, 0.9)), url('https://images.unsplash.com/photo-1551260627-fd1b6daa6dfa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+            border-radius: 0;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff6a00, #e65a00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            background-color: var(--dark);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--gray);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .feature p {
+            opacity: 0.8;
+        }
+        
+        .pricing-section {
+            background-color: var(--darker);
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid var(--primary);
+        }
+        
+        .pricing-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-subtitle {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .price-tag small {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            max-width: 500px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-weight: bold;
+        }
+        
+        .comparison-section {
+            padding: 3rem 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--gray);
+        }
+        
+        .comparison-table th {
+            background-color: var(--darker);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(odd) td {
+            background-color: var(--dark);
+        }
+        
+        .comparison-table tr:nth-child(even) td {
+            background-color: rgba(0, 11, 28, 0.5);
+        }
+        
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .comparison-table .highlight-cell {
+            position: relative;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .comparison-table .highlight-cell::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .get-started-section {
+            padding: 3rem;
+            background-color: var(--dark);
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid var(--gray);
+        }
+        
+        .get-started-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .get-started-subtitle {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .step-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .step {
+            position: relative;
+            padding: 1.5rem;
+            background-color: var(--darker);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: calc(50% - 20px);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 106, 0, 0.5);
+        }
+        
+        .help-section {
+            background-color: var(--darker);
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px dashed var(--primary);
+        }
+        
+        .help-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .help-text {
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .feature-grid,
+            .step-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include navbar -->
+    <!--#include file="navbar.html" -->
+    
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="badge">POPULAR CHOICE</div>
+            <h1 class="hero-title">Savings Plan Plus</h1>
+            <p class="hero-subtitle">The perfect balance of growth potential and stability for medium-term financial goals with enhanced features and returns.</p>
+            <a href="#" class="btn" id="get-started-btn">Get Started</a>
+        </section>
+        
+        <div class="page-content">
+            <!-- Benefits Section -->
+            <section>
+                <h2 class="section-title">Enhanced Benefits</h2>
+                <p class="section-description">Our Savings Plan Plus offers the ideal balance between growth and security, perfect for medium-term financial goals.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Higher Returns</h3>
+                        <p>Enjoy significantly higher interest rates between 3.0% - 5.5% annually for accelerated growth.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Diversified Portfolio</h3>
+                        <p>Your funds are strategically allocated across multiple asset classes for balanced risk and return.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Tax Advantages</h3>
+                        <p>No tax on earnings up to $12,000 per year, helping you keep more of what you earn.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Enhanced Security</h3>
+                        <p>Your investments are protected with advanced security measures and partial insurance coverage.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Professional Management</h3>
+                        <p>Experienced financial advisors monitor and adjust your portfolio for optimal performance.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Advanced Tools</h3>
+                        <p>Access to premium financial planning tools, reports, and personalized insights.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pricing Section -->
+            <section class="pricing-section">
+                <h2 class="pricing-title">Transparent Value Pricing</h2>
+                <p class="pricing-subtitle">Get more from your money with our Savings Plan Plus and enjoy higher potential returns.</p>
+                
+                <div class="price-tag">3.0-5.5% <small>Annual Yield</small></div>
+                
+                <ul class="pricing-features">
+                    <li><strong>$300</strong> minimum initial deposit</li>
+                    <li><strong>$100</strong> minimum monthly contribution</li>
+                    <li><strong>$30,000</strong> maximum annual deposit</li>
+                    <li><strong>0.30%</strong> annual management fee</li>
+                    <li>Diversified across multiple asset classes</li>
+                    <li>Quarterly portfolio rebalancing</li>
+                    <li>Tax-advantaged up to $12,000 annual earnings</li>
+                    <li>Partial liquidity (some restrictions may apply)</li>
+                </ul>
+                
+                <a href="#" class="btn" id="choose-plan-btn">Choose This Plan</a>
+            </section>
+            
+            <!-- Comparison Section -->
+            <section class="comparison-section">
+                <h2 class="section-title">Plan Comparison</h2>
+                <p class="section-description">See how the Savings Plan Plus compares to our other offerings.</p>
+                
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Basic Savings</th>
+                                <th>Savings Plan Plus</th>
+                                <th>Management Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Annual Return Range</td>
+                                <td>1.2% - 2.4%</td>
+                                <td class="highlight-cell">3.0% - 5.5%</td>
+                                <td>6.0% - 12.0%</td>
+                            </tr>
+                            <tr>
+                                <td>Minimum Initial Deposit</td>
+                                <td>$0</td>
+                                <td>$300</td>
+                                <td>$1,000</td>
+                            </tr>
+                            <tr>
+                                <td>Monthly Minimum</td>
+                                <td>$50</td>
+                                <td>$100</td>
+                                <td>$150</td>
+                            </tr>
+                            <tr>
+                                <td>Annual Management Fee</td>
+                                <td>0.25%</td>
+                                <td>0.30%</td>
+                                <td>0.75%</td>
+                            </tr>
+                            <tr>
+                                <td>Professional Portfolio Management</td>
+                                <td>Basic</td>
+                                <td class="highlight-cell">Enhanced</td>
+                                <td>Full-Service</td>
+                            </tr>
+                            <tr>
+                                <td>Risk Level</td>
+                                <td>Very Low</td>
+                                <td class="highlight-cell">Low-Medium</td>
+                                <td>Medium-High</td>
+                            </tr>
+                            <tr>
+                                <td>Recommended Time Horizon</td>
+                                <td>0-3 years</td>
+                                <td class="highlight-cell">3-7 years</td>
+                                <td>7+ years</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Get Started Section -->
+            <section class="get-started-section">
+                <h2 class="get-started-title">How to Get Started</h2>
+                <p class="get-started-subtitle">Setting up your Savings Plan Plus is simple and straightforward.</p>
+                
+                <div class="step-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Account</h3>
+                        <p>Sign up and complete your profile with detailed information for verification.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Risk Assessment</h3>
+                        <p>Complete a brief questionnaire to help us understand your financial goals and risk profile.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Fund Account</h3>
+                        <p>Make your initial deposit using bank transfer, debit card, or other payment methods.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Portfolio Setup</h3>
+                        <p>Our advisors will create a balanced portfolio aligned with your goals and risk tolerance.</p>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn" id="apply-now-btn">Apply Now</a>
+            </section>
+            
+            <!-- Help Section -->
+            <section class="help-section">
+                <h2 class="help-title">Not Sure If This Is The Right Plan For You?</h2>
+                <p class="help-text">Take our quick assessment to get a personalized recommendation based on your financial goals, risk tolerance, and time horizon.</p>
+                <a href="plan-recommender.html" class="btn btn-secondary">Find My Ideal Plan</a>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Include footer -->
+    <!--#include file="footer-savings.html" -->
+    
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login status for Get Started and Choose Plan buttons
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const choosePlanBtn = document.getElementById('choose-plan-btn');
+            const applyNowBtn = document.getElementById('apply-now-btn');
+            
+            // We're checking if the user is logged in by checking for an existing session.
+            // This would be replaced by your actual authentication check
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' || 
+                              '{{ session.get("user", "") }}' !== '';
+            
+            // Redirect based on login status
+            const handlePlanSelection = function(e) {
+                e.preventDefault();
+                if (isLoggedIn) {
+                    // If logged in, go to calculator
+                    window.location.href = 'investment-calculator.html';
+                } else {
+                    // If not logged in, redirect to login
+                    window.location.href = 'login.html';
+                }
+            };
+            
+            // Add event listeners
+            if (getStartedBtn) getStartedBtn.addEventListener('click', handlePlanSelection);
+            if (choosePlanBtn) choosePlanBtn.addEventListener('click', handlePlanSelection);
+            if (applyNowBtn) applyNowBtn.addEventListener('click', handlePlanSelection);
+        });
+    </script>
+</body>
+</html>

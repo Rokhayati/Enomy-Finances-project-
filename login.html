@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Enomy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0c121e;
+      color: white;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .left-panel, .right-panel {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .left-panel {
+      background-color: #d6d8e6;
+    }
+
+    .right-panel {
+      flex-direction: column;
+      background-color: #0c121e;
+    }
+
+    dotlottie-player {
+      width: 400px;
+      height: 400px;
+    }
+
+    .form-container {
+      width: 300%;
+      max-width: 400px;
+      background-color: #0c0d15;
+      padding: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(231, 225, 232, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff6f00;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #ccc;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 5px;
+      background-color: #2a2f4a;
+      color: white;
+    }
+
+    input[type="submit"] {
+      background-color: #ff6f00;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      margin-top: 25px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #e65c00;
+    }
+
+    .toggle-login {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #bbb;
+      cursor: pointer;
+    }
+
+    .toggle-login:hover {
+      text-decoration: underline;
+      color: #ff6f00;
+    }
+
+    p {
+      margin-top: 20px;
+      text-align: center;
+      color: #bbb;
+    }
+
+    a {
+      color: #ff6f00;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left-panel {
+        display: none;
+      }
+
+      .right-panel {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <!-- Lottie player script -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</head>
+<body>
+
+  <!-- Left Panel with Animation -->
+  <div class="left-panel">
+    <dotlottie-player 
+      src="https://lottie.host/091d683d-e53e-49ff-918b-ecbff4950bd8/93wUt2O10I.lottie" 
+      background="transparent" 
+      speed="1" 
+      loop 
+      autoplay>
+    </dotlottie-player>
+  </div>
+
+  <!-- Right Panel with Form -->
+  <div class="right-panel">
+    <div class="form-container">
+      <h2>Hit the gas — you’re just a login away.</h2>
+      <form id="loginForm">
+        <label id="loginLabel" for="loginField">Email:</label>
+        <input type="email" id="loginField" name="login" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+
+        <input type="submit" value="Login">
+      </form>
+
+      <div class="toggle-login" onclick="toggleLoginType()">Login with Username instead</div>
+      <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    </div>
+  </div>
+
+  <script>
+    let isEmail = true;
+
+    function toggleLoginType() {
+      const loginField = document.getElementById('loginField');
+      const loginLabel = document.getElementById('loginLabel');
+      const toggleText = document.querySelector('.toggle-login');
+
+      if (isEmail) {
+        loginLabel.textContent = 'Username:';
+        loginField.type = 'text';
+        toggleText.textContent = 'Login with Email instead';
+      } else {
+        loginLabel.textContent = 'Email:';
+        loginField.type = 'email';
+        toggleText.textContent = 'Login with Username instead';
+      }
+
+      isEmail = !isEmail;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // ✅ Updated to include source=login
+      window.location.href = 'loading.html?source=login';
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Resources - Enomy Finance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f1016;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-left img {
+            height: 40px;
+        }
+        
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .navbar-right a:hover {
+            color: #ff6a00;
+        }
+        
+        .hero {
+            margin-top: 80px;
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to right, #0c121e, #1a1a2e);
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 span {
+            color: #ff6a00;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .learning-paths {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #0f1016;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #ff6a00;
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .path-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .path-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .path-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .path-header {
+            background: linear-gradient(to right, #ff6a00, #e65a00);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .path-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .path-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .path-level {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .path-content {
+            padding: 20px;
+        }
+        
+        .path-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .module-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .module-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #444;
+        }
+        
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .module-list li::before {
+            content: '✓';
+            color: #ff6a00;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .path-button {
+            display: block;
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .path-button:hover {
+            background-color: #ff6a00;
+        }
+        
+        .featured-resources {
+            margin-bottom: 60px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-image {
+            width: 120px;
+            min-width: 120px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .resource-content {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .resource-type {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .type-article {
+            background-color: #e0f7fa;
+            color: #0097a7;
+        }
+        
+        .type-video {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .type-guide {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .resource-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #0f1016;
+        }
+        
+        .resource-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .resource-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .resource-link {
+            color: #ff6a00;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resource-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .resource-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        .glossary-section {
+            margin-bottom: 60px;
+        }
+        
+        .glossary-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .glossary-letter {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6a00;
+            margin-bottom: 15px;
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        .glossary-letter:first-of-type {
+            margin-top: 0;
+        }
+        
+        .glossary-term {
+            margin-bottom: 20px;
+        }
+        
+        .term-name {
+            font-weight: 600;
+            color: #0f1016;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .term-definition {
+            color: #666;
+        }
+        
+        .cta-section {
+            background: linear-gradient(to right, #0c121e, #1a1a2e);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 10px;
+            margin-bottom: 60px;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+        }
+        
+        .primary-button {
+            background-color: #ff6a00;
+            color: white;
+        }
+        
+        .primary-button:hover {
+            background-color: #e65a00;
+        }
+        
+        .secondary-button {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .secondary-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #ff6a00;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .path-grid, .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-card {
+                flex-direction: column;
+            }
+            
+            .resource-image {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="enomy.html">
+                <img src="images/Brand.png" alt="Enomy Logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            <a href="enomy.html">Home</a>
+            <a href="investment-calculator.html">Calculator</a>
+            <a href="market.html">Market</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="education.html">Learning</a>
+        </div>
+    </nav>
+    
+    <div class="hero">
+        <h1>Learning <span>Resources</span></h1>
+        <p>Explore our comprehensive collection of educational resources designed to help you develop your financial knowledge and make informed investment decisions.</p>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search for topics, terms, or concepts...">
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="learning-paths">
+            <div class="section-header">
+                <h2>Learning Paths</h2>
+                <p>Structured educational journeys to guide you from basic concepts to advanced strategies. Choose a path that matches your goals and experience level.</p>
+            </div>
+            
+            <div class="path-grid">
+                <div class="path-card">
+                    <div class="path-header">
+                        <div class="path-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Investing Fundamentals</h3>
+                        <div class="path-level">Beginner</div>
+                    </div>
+                    <div class="path-content">
+                        <p class="path-description">Master the essential concepts of investing and build a solid foundation for your financial journey.</p>
+                        <ul class="module-list">
+                            <li>Understanding Investment Basics</li>
+                            <li>Building Your First Portfolio</li>
+                            <li>Risk and Return Principles</li>
+                            <li>Asset Allocation Foundations</li>
+                            <li>Setting Financial Goals</li>
+                        </ul>
+                        <a href="#" class="path-button">Start Learning</a>
+                    </div>
+                </div>
+                
+                <div class="path-card">
+                    <div class="path-header">
+                        <div class="path-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Stock Market Mastery</h3>
+                        <div class="path-level">Intermediate</div>
+                    </div>
+                    <div class="path-content">
+                        <p class="path-description">Develop a deeper understanding of stock markets and learn strategies for successful equity investing.</p>
+                        <ul class="module-list">
+                            <li>Stock Valuation Methods</li>
+                            <li>Technical Analysis Fundamentals</li>
+                            <li>Fundamental Analysis</li>
+                            <li>Market Trends and Cycles</li>
+                            <li>Portfolio Management Strategies</li>
+                        </ul>
+                        <a href="#" class="path-button">Start Learning</a>
+                    </div>
+                </div>
+                
+                <div class="path-card">
+                    <div class="path-header">
+                        <div class="path-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Retirement Planning</h3>
+                        <div class="path-level">All Levels</div>
+                    </div>
+                    <div class="path-content">
+                        <p class="path-description">Learn how to effectively plan for retirement and build a portfolio that supports your long-term goals.</p>
+                        <ul class="module-list">
+                            <li>Retirement Account Types</li>
+                            <li>Calculating Retirement Needs</li>
+                            <li>Tax-Efficient Strategies</li>
+                            <li>Social Security Planning</li>
+                            <li>Withdrawal Strategies</li>
+                        </ul>
+                        <a href="#" class="path-button">Start Learning</a>
+                    </div>
+                </div>
+                
+                <div class="path-card">
+                    <div class="path-header">
+                        <div class="path-icon">
+                            <i class="fas fa-chess-knight"></i>
+                        </div>
+                        <h3>Advanced Investment Strategies</h3>
+                        <div class="path-level">Advanced</div>
+                    </div>
+                    <div class="path-content">
+                        <p class="path-description">Explore sophisticated investment approaches and optimization techniques for experienced investors.</p>
+                        <ul class="module-list">
+                            <li>Options Trading Strategies</li>
+                            <li>Fixed Income Securities</li>
+                            <li>Alternative Investments</li>
+                            <li>Tax Optimization</li>
+                            <li>Portfolio Rebalancing</li>
+                        </ul>
+                        <a href="#" class="path-button">Start Learning</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="featured-resources">
+            <div class="section-header">
+                <h2>Featured Resources</h2>
+                <p>Explore our handpicked selection of articles, videos, and guides to enhance your financial knowledge.</p>
+            </div>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1569025743873-ea3a9ade89f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="resource-content">
+                        <span class="resource-type type-article">Article</span>
+                        <h3 class="resource-title">Understanding Market Volatility</h3>
+                        <p class="resource-meta">Reading time: 8 min</p>
+                        <p class="resource-description">Learn how market volatility affects your investments and strategies to navigate uncertain times.</p>
+                        <a href="#" class="resource-link">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="resource-content">
+                        <span class="resource-type type-video">Video</span>
+                        <h3 class="resource-title">How to Build a Diversified Portfolio</h3>
+                        <p class="resource-meta">Duration: 15:27</p>
+                        <p class="resource-description">A step-by-step guide to creating a balanced portfolio that aligns with your risk tolerance and goals.</p>
+                        <a href="#" class="resource-link">Watch Video <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="resource-content">
+                        <span class="resource-type type-guide">Guide</span>
+                        <h3 class="resource-title">Tax-Efficient Investing Strategies</h3>
+                        <p class="resource-meta">Reading time: 12 min</p>
+                        <p class="resource-description">Maximize your investment returns by implementing these tax-efficient strategies.</p>
+                        <a href="#" class="resource-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-image" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="resource-content">
+                        <span class="resource-type type-video">Video</span>
+                        <h3 class="resource-title">ETFs vs. Mutual Funds: What's the Difference?</h3>
+                        <p class="resource-meta">Duration: 11:52</p>
+                        <p class="resource-description">An in-depth comparison of ETFs and mutual funds to help you choose the right option.</p>
+                        <a href="#" class="resource-link">Watch Video <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glossary-section">
+            <div class="section-header">
+                <h2>Financial Glossary</h2>
+                <p>Build your financial vocabulary with our comprehensive glossary of investment terms.</p>
+            </div>
+            
+            <div class="glossary-container">
+                <div class="glossary-letter">A</div>
+                <div class="glossary-term">
+                    <div class="term-name">Asset Allocation</div>
+                    <div class="term-definition">The process of dividing investments among different kinds of assets, such as stocks, bonds, and cash, to optimize the risk/return tradeoff based on an individual's specific situation.</div>
+                </div>
+                <div class="glossary-term">
+                    <div class="term-name">Annual Percentage Rate (APR)</div>
+                    <div class="term-definition">The yearly cost of a loan, including interest and fees, expressed as a percentage rate.</div>
+                </div>
+                
+                <div class="glossary-letter">B</div>
+                <div class="glossary-term">
+                    <div class="term-name">Bond</div>
+                    <div class="term-definition">A debt investment in which an investor loans money to an entity (typically corporate or governmental) which borrows the funds for a defined period of time at a variable or fixed interest rate.</div>
+                </div>
+                <div class="glossary-term">
+                    <div class="term-name">Bull Market</div>
+                    <div class="term-definition">A financial market of a group of securities in which prices are rising or are expected to rise.</div>
+                </div>
+                
+                <div class="glossary-letter">C</div>
+                <div class="glossary-term">
+                    <div class="term-name">Compound Interest</div>
+                    <div class="term-definition">Interest calculated on the initial principal and also on the accumulated interest of previous periods of a deposit or loan.</div>
+                </div>
+                <div class="glossary-term">
+                    <div class="term-name">Capital Gain</div>
+                    <div class="term-definition">An increase in the value of a capital asset (investment or real estate) that gives it a higher worth than the purchase price.</div>
+                </div>
+                
+                <!-- More glossary terms would be added in a real application -->
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Ready to Accelerate Your Learning?</h2>
+            <p>Join our community of investors and gain access to premium educational content, live webinars, and personalized learning recommendations.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button primary-button">Join Premium</a>
+                <a href="#" class="cta-button secondary-button">Explore Free Resources</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Enomy Finance. All Rights Reserved.</p>
+        <p><a href="enomy.html">Home</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a></p>
+    </footer>
+    
+    <script>
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.keyCode === 13) {
+                // In a real application, this would trigger a search
+                alert(`Searching for: ${this.value}`);
+            }
+        });
+    </script>
+</body>
+</html>

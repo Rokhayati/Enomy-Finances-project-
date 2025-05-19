@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer</title>
+  <style>
+    :root {
+      --primary: #ff6a00;
+      --primary-light: #ff8d3f;
+      --primary-dark: #e65a00;
+      --dark: #000b1c;
+      --darker: #00060f;
+      --light: #f0f2f5;
+      --lighter: #ffffff;
+      --gray: #333945;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    .footer {
+      background-color: var(--darker);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      border-top: 1px solid var(--primary);
+    }
+
+    .footer-content {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="main.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="investment-calculator.html">Calculator</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+      </div>
+      <div class="copyright">
+        &copy; <span id="current-year">2023</span> Savings & Investments Predictor. All rights reserved.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Update copyright year
+    document.getElementById('current-year').textContent = new Date().getFullYear().toString();
+  </script>
+</body>
+</html>

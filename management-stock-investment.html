@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Stock Investment - Savings & Investments Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Savings_files/style.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 11, 28, 0.7), rgba(0, 11, 28, 0.9)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+            border-radius: 0;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff6a00, #e65a00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            background-color: var(--dark);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--gray);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .feature p {
+            opacity: 0.8;
+        }
+        
+        .pricing-section {
+            background-color: var(--darker);
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid var(--primary);
+        }
+        
+        .pricing-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-subtitle {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .price-tag small {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            max-width: 500px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-weight: bold;
+        }
+        
+        .portfolio-section {
+            padding: 3rem 0;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .portfolio-card {
+            background-color: var(--dark);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+        
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        }
+        
+        .portfolio-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .portfolio-desc {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .performance-section {
+            padding: 3rem;
+            background-color: var(--dark);
+            border-radius: 10px;
+            margin: 3rem 0;
+            border: 1px solid var(--gray);
+        }
+        
+        .performance-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .performance-chart {
+            height: 400px;
+            background-color: var(--darker);
+            border-radius: 10px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--primary);
+        }
+        
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            background: linear-gradient(to top, var(--primary-dark), var(--primary));
+            border-radius: 5px 5px 0 0;
+            transition: height 1s ease;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: var(--light);
+            width: 100%;
+            text-align: center;
+        }
+        
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-card {
+            background-color: var(--darker);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .get-started-section {
+            padding: 3rem;
+            background-color: var(--dark);
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid var(--gray);
+        }
+        
+        .get-started-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .get-started-subtitle {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .step-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .step {
+            position: relative;
+            padding: 1.5rem;
+            background-color: var(--darker);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: calc(50% - 20px);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 106, 0, 0.5);
+        }
+        
+        .help-section {
+            background-color: var(--darker);
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px dashed var(--primary);
+        }
+        
+        .help-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .help-text {
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .feature-grid,
+            .portfolio-grid,
+            .step-grid,
+            .performance-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .performance-chart {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include navbar -->
+    <!--#include file="navbar.html" -->
+    
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="badge">PREMIUM</div>
+            <h1 class="hero-title">Management Stock Investment</h1>
+            <p class="hero-subtitle">Unlock the full potential of your long-term investments with our professionally managed stock portfolio strategy.</p>
+            <a href="#" class="btn" id="get-started-btn">Get Started</a>
+        </section>
+        
+        <div class="page-content">
+            <!-- Benefits Section -->
+            <section>
+                <h2 class="section-title">Premium Benefits</h2>
+                <p class="section-description">Our Management Stock Investment plan offers sophisticated strategies and professional guidance for maximum long-term growth potential.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Maximum Growth Potential</h3>
+                        <p>Access to high-growth securities with potential returns of 6.0% - 12.0% annually or more.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Expert Management</h3>
+                        <p>Your portfolio is actively managed by seasoned investment professionals with proven track records.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3>Diversified Strategy</h3>
+                        <p>Strategic allocation across multiple sectors, market caps, and regions to optimize returns and manage risk.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h3>Dynamic Rebalancing</h3>
+                        <p>Regular portfolio rebalancing ensures your investments stay aligned with changing market conditions.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Advanced Analytics</h3>
+                        <p>Comprehensive performance reporting and detailed analytics to track your investment progress.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>Tax Optimization</h3>
+                        <p>Strategic tax management to minimize liabilities and maximize after-tax returns.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Portfolio Allocation Section -->
+            <section class="portfolio-section">
+                <h2 class="section-title">Strategic Portfolio Allocation</h2>
+                <p class="section-description">Your investment is strategically diversified across multiple asset classes for optimal risk-adjusted returns.</p>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Large Cap Stocks</h3>
+                        <div class="portfolio-percentage">35%</div>
+                        <p class="portfolio-desc">Established blue-chip companies with stable growth and potential for consistent dividends.</p>
+                    </div>
+                    
+                    <div class="portfolio-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3>Mid & Small Cap</h3>
+                        <div class="portfolio-percentage">25%</div>
+                        <p class="portfolio-desc">Companies with high growth potential that could become tomorrow's market leaders.</p>
+                    </div>
+                    
+                    <div class="portfolio-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3>International Markets</h3>
+                        <div class="portfolio-percentage">20%</div>
+                        <p class="portfolio-desc">Global diversification to capture growth opportunities in emerging and developed markets.</p>
+                    </div>
+                    
+                    <div class="portfolio-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>Technology & Innovation</h3>
+                        <div class="portfolio-percentage">15%</div>
+                        <p class="portfolio-desc">Cutting-edge companies driving technological advancement and disruption.</p>
+                    </div>
+                    
+                    <div class="portfolio-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h3>Fixed Income</h3>
+                        <div class="portfolio-percentage">5%</div>
+                        <p class="portfolio-desc">Strategic bond allocation to provide stability and income to the overall portfolio.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Performance Section -->
+            <section class="performance-section">
+                <h2 class="performance-title">Historical Performance</h2>
+                <p class="section-description" style="text-align: center;">A look at how our Management Stock Investment plan has performed over time.</p>
+                
+                <div class="performance-chart">
+                    <div class="chart-bar" style="left: 10%; height: 30%; width: 8%;">
+                        <div class="chart-label">Year 1<br>+8.4%</div>
+                    </div>
+                    <div class="chart-bar" style="left: 25%; height: 45%; width: 8%;">
+                        <div class="chart-label">Year 2<br>+11.2%</div>
+                    </div>
+                    <div class="chart-bar" style="left: 40%; height: 25%; width: 8%;">
+                        <div class="chart-label">Year 3<br>+7.1%</div>
+                    </div>
+                    <div class="chart-bar" style="left: 55%; height: 60%; width: 8%;">
+                        <div class="chart-label">Year 4<br>+15.3%</div>
+                    </div>
+                    <div class="chart-bar" style="left: 70%; height: 40%; width: 8%;">
+                        <div class="chart-label">Year 5<br>+10.2%</div>
+                    </div>
+                    <div class="chart-bar" style="left: 85%; height: 70%; width: 8%;">
+                        <div class="chart-label">Year 6<br>+18.7%</div>
+                    </div>
+                </div>
+                
+                <div class="performance-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">11.8%</div>
+                        <div class="stat-label">Average Annual Return</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value">18.7%</div>
+                        <div class="stat-label">Best Annual Performance</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value">7.1%</div>
+                        <div class="stat-label">Lowest Annual Performance</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value">95.4%</div>
+                        <div class="stat-label">Cumulative 6-Year Return</div>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 2rem; font-style: italic; opacity: 0.7;">*Past performance is not indicative of future results. All investments involve risk and may result in both profits and losses.</p>
+            </section>
+            
+            <!-- Pricing Section -->
+            <section class="pricing-section">
+                <h2 class="pricing-title">Premium Pricing for Serious Investors</h2>
+                <p class="pricing-subtitle">Unlock the potential of professional stock management with our premium investment offering.</p>
+                
+                <div class="price-tag">6.0-12.0% <small>Annual Target Return</small></div>
+                
+                <ul class="pricing-features">
+                    <li><strong>$1,000</strong> minimum initial investment</li>
+                    <li><strong>$150</strong> minimum monthly contribution</li>
+                    <li><strong>Unlimited</strong> maximum annual investment</li>
+                    <li><strong>0.75%</strong> annual management fee</li>
+                    <li>Full-service professional portfolio management</li>
+                    <li>Monthly portfolio rebalancing and optimization</li>
+                    <li>Quarterly strategy review sessions</li>
+                    <li>Advanced tax optimization strategies</li>
+                    <li>Premium financial planning tools and resources</li>
+                    <li>Dedicated investment advisor</li>
+                </ul>
+                
+                <a href="#" class="btn" id="choose-plan-btn">Choose This Plan</a>
+            </section>
+            
+            <!-- Get Started Section -->
+            <section class="get-started-section">
+                <h2 class="get-started-title">How to Get Started</h2>
+                <p class="get-started-subtitle">Begin your journey to building serious long-term wealth with our professional investment management.</p>
+                
+                <div class="step-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Account</h3>
+                        <p>Sign up and complete our comprehensive investor profile questionnaire.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Investment Strategy Call</h3>
+                        <p>Discuss your financial goals and risk tolerance with an investment advisor.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Portfolio Design</h3>
+                        <p>Receive your custom portfolio allocation strategy tailored to your objectives.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Fund Your Account</h3>
+                        <p>Make your initial investment and set up recurring contributions.</p>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn" id="apply-now-btn">Apply Now</a>
+            </section>
+            
+            <!-- Help Section -->
+            <section class="help-section">
+                <h2 class="help-title">Not Sure If This Is The Right Plan For You?</h2>
+                <p class="help-text">Take our quick assessment to get a personalized recommendation based on your financial goals, risk tolerance, and time horizon.</p>
+                <a href="plan-recommender.html" class="btn btn-secondary">Find My Ideal Plan</a>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Include footer -->
+    <!--#include file="footer-savings.html" -->
+    
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the chart bars on page load
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.chart-bar');
+                bars.forEach(bar => {
+                    const height = bar.style.height;
+                    bar.style.height = '0';
+                    setTimeout(() => {
+                        bar.style.height = height;
+                    }, 100);
+                });
+            }, 500);
+            
+            // Check login status for Get Started and Choose Plan buttons
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const choosePlanBtn = document.getElementById('choose-plan-btn');
+            const applyNowBtn = document.getElementById('apply-now-btn');
+            
+            // We're checking if the user is logged in by checking for an existing session.
+            // This would be replaced by your actual authentication check
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' || 
+                              '{{ session.get("user", "") }}' !== '';
+            
+            // Redirect based on login status
+            const handlePlanSelection = function(e) {
+                e.preventDefault();
+                if (isLoggedIn) {
+                    // If logged in, go to calculator
+                    window.location.href = 'investment-calculator.html';
+                } else {
+                    // If not logged in, redirect to login
+                    window.location.href = 'login.html';
+                }
+            };
+            
+            // Add event listeners
+            if (getStartedBtn) getStartedBtn.addEventListener('click', handlePlanSelection);
+            if (choosePlanBtn) choosePlanBtn.addEventListener('click', handlePlanSelection);
+            if (applyNowBtn) applyNowBtn.addEventListener('click', handlePlanSelection);
+        });
+    </script>
+</body>
+</html>

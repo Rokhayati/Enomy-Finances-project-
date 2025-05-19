@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Market Statistics - Enomy Finance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f1016;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-left img {
+            height: 40px;
+        }
+        
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .navbar-right a:hover {
+            color: #ff6a00;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #0f1016;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-card h3 {
+            font-size: 1.2rem;
+            color: #0f1016;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .dashboard-card h3 i {
+            color: #ff6a00;
+            margin-right: 10px;
+        }
+        
+        .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0f1016;
+            margin-bottom: 10px;
+        }
+        
+        .change {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .change.up {
+            color: #4caf50;
+        }
+        
+        .change.down {
+            color: #f44336;
+        }
+        
+        .chart-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .chart-section h2 {
+            font-size: 1.5rem;
+            color: #0f1016;
+            margin-bottom: 25px;
+        }
+        
+        .chart-container {
+            height: 400px;
+            position: relative;
+        }
+        
+        .stock-table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 50px;
+            overflow-x: auto;
+        }
+        
+        .stock-table h2 {
+            font-size: 1.5rem;
+            color: #0f1016;
+            margin-bottom: 25px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f7f9fc;
+            color: #0f1016;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f7f9fc;
+        }
+        
+        .positive {
+            color: #4caf50;
+            font-weight: 500;
+        }
+        
+        .negative {
+            color: #f44336;
+            font-weight: 500;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #f7f9fc;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background-color: #ff6a00;
+            color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: #e6e9ef;
+        }
+        
+        .refresh-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: #0f1016;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            float: right;
+            margin-bottom: 20px;
+        }
+        
+        .refresh-button:hover {
+            background-color: #ff6a00;
+        }
+        
+        .footer {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 100px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #ff6a00;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .value {
+                font-size: 2rem;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="enomy.html">
+                <img src="images/Brand.png" alt="Enomy Logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            <a href="enomy.html">Home</a>
+            <a href="investment-calculator.html">Calculator</a>
+            <a href="market.html">Market</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="education.html">Learning</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>Market Statistics</h1>
+            <p>Stay informed with real-time market data, trends, and insights to make confident investment decisions.</p>
+        </div>
+        
+        <button class="refresh-button">
+            <i class="fas fa-sync-alt"></i> Refresh Data
+        </button>
+        
+        <div class="dashboard">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-chart-line"></i> S&P 500</h3>
+                <div class="value">4,389.25</div>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i> +1.23% (+53.47)
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-chart-line"></i> Dow Jones</h3>
+                <div class="value">34,152.60</div>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i> +0.87% (+295.86)
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-chart-line"></i> NASDAQ</h3>
+                <div class="value">13,590.65</div>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i> -0.45% (-61.72)
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-dollar-sign"></i> USD/EUR</h3>
+                <div class="value">0.9132</div>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i> +0.32% (+0.0029)
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-coins"></i> Gold (oz)</h3>
+                <div class="value">$1,842.30</div>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i> -0.18% (-$3.35)
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-tint"></i> Crude Oil (bbl)</h3>
+                <div class="value">$72.58</div>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i> +1.52% (+$1.09)
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <h2>Market Trends</h2>
+            <div class="tabs">
+                <div class="tab active" data-period="1D">1D</div>
+                <div class="tab" data-period="1W">1W</div>
+                <div class="tab" data-period="1M">1M</div>
+                <div class="tab" data-period="3M">3M</div>
+                <div class="tab" data-period="1Y">1Y</div>
+                <div class="tab" data-period="5Y">5Y</div>
+            </div>
+            <div class="chart-container">
+                <canvas id="marketChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="stock-table">
+            <h2>Top Performers</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Company</th>
+                        <th>Price ($)</th>
+                        <th>Change</th>
+                        <th>% Change</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AAPL</td>
+                        <td>Apple Inc.</td>
+                        <td>147.82</td>
+                        <td class="positive">+2.34</td>
+                        <td class="positive">+1.61%</td>
+                        <td>78.2M</td>
+                    </tr>
+                    <tr>
+                        <td>MSFT</td>
+                        <td>Microsoft Corp.</td>
+                        <td>329.37</td>
+                        <td class="positive">+5.12</td>
+                        <td class="positive">+1.58%</td>
+                        <td>25.1M</td>
+                    </tr>
+                    <tr>
+                        <td>TSLA</td>
+                        <td>Tesla Inc.</td>
+                        <td>258.83</td>
+                        <td class="positive">+12.21</td>
+                        <td class="positive">+4.95%</td>
+                        <td>134.6M</td>
+                    </tr>
+                    <tr>
+                        <td>AMZN</td>
+                        <td>Amazon.com Inc.</td>
+                        <td>134.95</td>
+                        <td class="positive">+1.87</td>
+                        <td class="positive">+1.41%</td>
+                        <td>41.3M</td>
+                    </tr>
+                    <tr>
+                        <td>META</td>
+                        <td>Meta Platforms Inc.</td>
+                        <td>312.66</td>
+                        <td class="positive">+7.45</td>
+                        <td class="positive">+2.44%</td>
+                        <td>30.8M</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="stock-table">
+            <h2>Biggest Losers</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Company</th>
+                        <th>Price ($)</th>
+                        <th>Change</th>
+                        <th>% Change</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NFLX</td>
+                        <td>Netflix Inc.</td>
+                        <td>385.23</td>
+                        <td class="negative">-12.56</td>
+                        <td class="negative">-3.16%</td>
+                        <td>15.7M</td>
+                    </tr>
+                    <tr>
+                        <td>DIS</td>
+                        <td>Walt Disney Co.</td>
+                        <td>93.68</td>
+                        <td class="negative">-2.87</td>
+                        <td class="negative">-2.97%</td>
+                        <td>12.4M</td>
+                    </tr>
+                    <tr>
+                        <td>INTC</td>
+                        <td>Intel Corp.</td>
+                        <td>31.25</td>
+                        <td class="negative">-0.95</td>
+                        <td class="negative">-2.95%</td>
+                        <td>45.2M</td>
+                    </tr>
+                    <tr>
+                        <td>GE</td>
+                        <td>General Electric Co.</td>
+                        <td>73.45</td>
+                        <td class="negative">-1.26</td>
+                        <td class="negative">-1.69%</td>
+                        <td>6.9M</td>
+                    </tr>
+                    <tr>
+                        <td>T</td>
+                        <td>AT&T Inc.</td>
+                        <td>16.73</td>
+                        <td class="negative">-0.28</td>
+                        <td class="negative">-1.65%</td>
+                        <td>38.1M</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Enomy Finance. All Rights Reserved.</p>
+        <p><a href="enomy.html">Home</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a></p>
+    </footer>
+    
+    <script>
+        // Market chart
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        
+        // Sample data for 1D period (hourly data points)
+        const oneDayData = {
+            labels: ['9:30', '10:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:00'],
+            datasets: [
+                {
+                    label: 'S&P 500',
+                    data: [4335.78, 4342.16, 4358.92, 4351.43, 4362.89, 4378.64, 4385.17, 4389.25],
+                    borderColor: '#ff6a00',
+                    backgroundColor: 'rgba(255, 106, 0, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'NASDAQ',
+                    data: [13652.37, 13641.95, 13625.42, 13590.18, 13576.23, 13592.47, 13602.18, 13590.65],
+                    borderColor: '#3f51b5',
+                    backgroundColor: 'rgba(63, 81, 181, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        };
+        
+        // Create the chart
+        const marketChart = new Chart(ctx, {
+            type: 'line',
+            data: oneDayData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+        
+        // Handle tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // In a real application, this would fetch new data based on the period
+                // For demo purposes, we'll just simulate a data change
+                
+                const period = this.getAttribute('data-period');
+                
+                // Sample data for different periods (simplified for demo)
+                let newData;
+                
+                switch(period) {
+                    case '1D':
+                        // We already have this data
+                        newData = oneDayData;
+                        break;
+                    case '1W':
+                        newData = {
+                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                            datasets: [
+                                {
+                                    label: 'S&P 500',
+                                    data: [4315.24, 4330.45, 4345.87, 4370.32, 4389.25],
+                                    borderColor: '#ff6a00',
+                                    backgroundColor: 'rgba(255, 106, 0, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                },
+                                {
+                                    label: 'NASDAQ',
+                                    data: [13710.36, 13670.18, 13625.42, 13605.78, 13590.65],
+                                    borderColor: '#3f51b5',
+                                    backgroundColor: 'rgba(63, 81, 181, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        };
+                        break;
+                    case '1M':
+                        // Generate 30 days of data
+                        const monthLabels = Array.from({length: 30}, (_, i) => i + 1);
+                        const spData = [4250, 4260, 4270, 4265, 4280, 4290, 4275, 4285, 4300, 4310, 4305, 4290, 4300, 4320, 4330, 4335, 4340, 4330, 4345, 4350, 4365, 4370, 4360, 4350, 4360, 4370, 4380, 4375, 4385, 4389.25];
+                        const nasdaqData = [13400, 13420, 13450, 13440, 13460, 13480, 13470, 13490, 13510, 13530, 13520, 13500, 13510, 13540, 13560, 13570, 13580, 13560, 13570, 13590, 13610, 13620, 13600, 13580, 13590, 13610, 13620, 13600, 13595, 13590.65];
+                        
+                        newData = {
+                            labels: monthLabels,
+                            datasets: [
+                                {
+                                    label: 'S&P 500',
+                                    data: spData,
+                                    borderColor: '#ff6a00',
+                                    backgroundColor: 'rgba(255, 106, 0, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                },
+                                {
+                                    label: 'NASDAQ',
+                                    data: nasdaqData,
+                                    borderColor: '#3f51b5',
+                                    backgroundColor: 'rgba(63, 81, 181, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        };
+                        break;
+                    // More periods would be added in a real application
+                    default:
+                        newData = oneDayData;
+                }
+                
+                // Update chart data
+                marketChart.data = newData;
+                marketChart.update();
+            });
+        });
+        
+        // Refresh button
+        document.querySelector('.refresh-button').addEventListener('click', function() {
+            // In a real application, this would fetch fresh data
+            // For demo, we'll just show an alert
+            alert('Market data refreshed!');
+        });
+    </script>
+</body>
+</html>

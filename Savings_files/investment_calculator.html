@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Calculator - Savings and Investments Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #ff6a00;
+      --primary-light: #ff8d3f;
+      --primary-dark: #e65a00;
+      --dark: #000b1c;
+      --darker: #00060f;
+      --light: #f0f2f5;
+      --lighter: #ffffff;
+      --gray: #333945;
+      --success: #4CAF50;
+      --info: #2196F3;
+      --warning: #FFC107;
+      --danger: #F44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Interactive background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background-color: rgba(255, 106, 0, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: white;
+      padding: 1.5rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--primary);
+    }
+
+    .header-content {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-light);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      bottom: 0;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background-color: rgba(0, 11, 28, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      border: 1px solid var(--primary);
+      backdrop-filter: blur(10px);
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--primary);
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .page-header p {
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .calculator-body {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .input-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-group label {
+      font-weight: 500;
+      color: var(--light);
+    }
+
+    .input-group input, 
+    .input-group select {
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--gray);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: var(--dark);
+      color: var(--light);
+    }
+
+    .input-group input:focus, 
+    .input-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.2);
+    }
+
+    .btn {
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .visual-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .image-container {
+      background-color: var(--dark);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--primary);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .results {
+      background-color: var(--dark);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--primary);
+    }
+
+    .results h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .results-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .results-list li {
+      background-color: var(--gray);
+      padding: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
+      color: var(--light);
+      border-left: 3px solid var(--primary);
+    }
+
+    .results-list li strong {
+      color: var(--primary);
+    }
+
+    .chart-container {
+      margin-top: 2rem;
+      height: 400px;
+      background-color: var(--dark);
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--primary);
+    }
+
+    .final-amount-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .final-amount-card {
+      background-color: var(--gray);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      border-left: 4px solid var(--primary);
+    }
+
+    .final-amount-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .final-amount-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .final-amount-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .footer {
+      background-color: var(--darker);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      border-top: 1px solid var(--primary);
+    }
+
+    .footer-content {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    /* Investment option cards */
+    .investment-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .investment-card {
+      background-color: var(--dark);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--primary);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .investment-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .investment-card.selected {
+      background-color: rgba(255, 106, 0, 0.1);
+      border: 1px solid var(--primary);
+    }
+
+    .investment-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .investment-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .investment-card li {
+      font-size: 0.9rem;
+    }
+
+    .investment-card li strong {
+      color: var(--primary);
+    }
+
+    /* Amount display */
+    .amount-display {
+      background-color: var(--gray);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      border-left: 4px solid var(--primary);
+    }
+
+    .amount-display h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .amount-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Suggestions section */
+    .suggestions-container {
+      background-color: var(--dark);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border: 1px solid var(--primary);
+    }
+
+    .suggestions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .suggestions-header h2 {
+      color: var(--primary);
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .refresh-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .suggestions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .suggestion-item {
+      background-color: var(--gray);
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      border-left: 3px solid var(--primary);
+    }
+
+    .suggestion-icon {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-top: 2px;
+    }
+
+    .suggestion-content h3 {
+      margin: 0 0 0.3rem 0;
+      font-size: 1rem;
+      color: var(--light);
+    }
+
+    .suggestion-content p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--light);
+      opacity: 0.8;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .calculator-body {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .investment-options {
+        grid-template-columns: 1fr;
+      }
+
+      .final-amount-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Interactive background particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <a href="main.html" class="logo">
+        <div class="logo-text">Savings & Investments Predictor</div>
+      </a>
+      <div class="nav-links">
+        <a href="main.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="rates.html">Rates</a>
+        <a href="investment-calculator.html">Calculator</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Savings & Investment Calculator</h1>
+      <p>Plan your financial future with our powerful investment calculator. See how your money can grow over time with different investment strategies.</p>
+    </div>
+
+    <div class="calculator-body">
+      <div class="input-section">
+        <div class="input-group">
+          <label for="initial-investment">Initial Investment ($)</label>
+          <input type="number" id="initial-investment" placeholder="Enter initial amount" value="1000">
+        </div>
+
+        <div class="input-group">
+          <label for="monthly-contribution">Monthly Contribution ($)</label>
+          <input type="number" id="monthly-contribution" placeholder="Enter monthly amount" value="100">
+        </div>
+
+        <div class="input-group">
+          <label for="annual-return">Expected Annual Return (%)</label>
+          <input type="number" id="annual-return" placeholder="Enter expected return rate" value="7" step="0.1">
+        </div>
+
+        <div class="input-group">
+          <label for="investment-period">Investment Period (Years)</label>
+          <input type="number" id="investment-period" placeholder="Enter number of years" value="10" min="1" max="50">
+        </div>
+
+        <div class="input-group">
+          <label for="compounding-frequency">Compounding Frequency</label>
+          <select id="compounding-frequency">
+            <option value="1">Annually</option>
+            <option value="4">Quarterly</option>
+            <option value="12" selected>Monthly</option>
+            <option value="365">Daily</option>
+          </select>
+        </div>
+
+        <h3>Select Investment Strategy:</h3>
+        <div class="investment-options">
+          <div class="investment-card" id="conservative" onclick="selectInvestmentStrategy('conservative')">
+            <h3>Conservative</h3>
+            <ul>
+              <li><strong>Returns:</strong> 4% - 6%</li>
+              <li><strong>Risk:</strong> Low</li>
+              <li><strong>Ideal for:</strong> Short-term goals</li>
+              <li><strong>Assets:</strong> Bonds, CDs, Money Market</li>
+            </ul>
+          </div>
+          <div class="investment-card" id="moderate" onclick="selectInvestmentStrategy('moderate')">
+            <h3>Moderate</h3>
+            <ul>
+              <li><strong>Returns:</strong> 6% - 8%</li>
+              <li><strong>Risk:</strong> Medium</li>
+              <li><strong>Ideal for:</strong> 5-10 year goals</li>
+              <li><strong>Assets:</strong> Balanced mix of stocks & bonds</li>
+            </ul>
+          </div>
+          <div class="investment-card" id="aggressive" onclick="selectInvestmentStrategy('aggressive')">
+            <h3>Aggressive</h3>
+            <ul>
+              <li><strong>Returns:</strong> 8% - 12%</li>
+              <li><strong>Risk:</strong> High</li>
+              <li><strong>Ideal for:</strong> Long-term growth</li>
+              <li><strong>Assets:</strong> Stocks, ETFs, Real Estate</li>
+            </ul>
+          </div>
+        </div>
+
+        <button class="btn" id="calculate-btn">Calculate Investment</button>
+
+        <!-- Amount Display -->
+        <div class="amount-display" style="display: none;">
+          <h3>In <span id="display-years">10</span> years, your initial $<span id="display-initial">1,000</span> could grow to:</h3>
+          <div class="amount-value" id="display-final">$0.00</div>
+        </div>
+
+        <!-- Final Amount Cards -->
+        <div class="final-amount-container" style="display: none;">
+          <div class="final-amount-card">
+            <h3>Total Contributions</h3>
+            <div class="final-amount-value" id="total-contributions">$0.00</div>
+            <div class="final-amount-label">What you invested</div>
+          </div>
+          <div class="final-amount-card">
+            <h3>Total Interest</h3>
+            <div class="final-amount-value" id="total-interest">$0.00</div>
+            <div class="final-amount-label">What your money earned</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-section">
+        <div class="results">
+          <h2>Investment Projection</h2>
+          <ul class="results-list">
+            <li><strong>Future Value:</strong> <span id="future-value">$0.00</span></li>
+            <li><strong>Initial Investment:</strong> <span id="initial-value">$1,000.00</span></li>
+            <li><strong>Monthly Contribution:</strong> <span id="monthly-value">$100.00</span></li>
+            <li><strong>Annual Return Rate:</strong> <span id="return-value">7.00%</span></li>
+            <li><strong>Investment Period:</strong> <span id="period-value">10 years</span></li>
+          </ul>
+        </div>
+
+        <!-- Graph Container -->
+        <div class="chart-container">
+          <canvas id="investment-chart"></canvas>
+        </div>
+
+        <!-- Suggestions Section -->
+        <div class="suggestions-container">
+          <div class="suggestions-header">
+            <h2>Investment Insights</h2>
+            <button class="refresh-btn" id="refresh-insights">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+          <div class="suggestions-list" id="insights-list">
+            <div class="suggestion-item">
+              <div class="suggestion-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="suggestion-content">
+                <h3>Time is Your Friend</h3>
+                <p>The longer your investment period, the more you benefit from compound growth.</p>
+              </div>
+            </div>
+            <div class="suggestion-item">
+              <div class="suggestion-icon">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <div class="suggestion-content">
+                <h3>Regular Contributions Matter</h3>
+                <p>Consistently adding even small amounts can dramatically increase your final total.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="main.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="investment-calculator.html">Calculator</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+      </div>
+      <div class="copyright">
+        &copy; <span id="current-year">2023</span> Savings & Investments Predictor. All rights reserved.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create interactive background particles
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      
+      function createParticles() {
+        const particles = document.getElementById('particles');
+        if (!particles) return;
+        
+        particles.innerHTML = '';
+        const numParticles = Math.floor(window.innerWidth / 10);
+        
+        for (let i = 0; i < numParticles; i++) {
+          const size = Math.random() * 5 + 1;
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}vw`;
+          particle.style.top = `${Math.random() * 100}vh`;
+          particle.style.opacity = Math.random() * 0.5 + 0.1;
+          particles.appendChild(particle);
+          
+          animateParticle(particle);
+        }
+      }
+      
+      function animateParticle(particle) {
+        const duration = Math.random() * 15000 + 15000;
+        const xMove = Math.random() * 20 - 10;
+        const yMove = Math.random() * 20 - 10;
+        
+        particle.animate([
+          { transform: 'translate(0, 0)' },
+          { transform: `translate(${xMove}vw, ${yMove}vh)` }
+        ], {
+          duration: duration,
+          iterations: Infinity,
+          direction: 'alternate',
+          easing: 'ease-in-out'
+        });
+      }
+      
+      window.addEventListener('resize', createParticles);
+
+      // Investment calculator
+      const calculateBtn = document.getElementById('calculate-btn');
+      if (calculateBtn) {
+        calculateBtn.addEventListener('click', calculateInvestment);
+      }
+
+      // Initialize UI elements
+      document.getElementById('initial-value').textContent = formatCurrency(1000);
+      document.getElementById('monthly-value').textContent = formatCurrency(100);
+      document.getElementById('return-value').textContent = '7.00%';
+      document.getElementById('period-value').textContent = '10 years';
+      
+      // Investment strategy selection
+      selectInvestmentStrategy('moderate');
+    });
+
+    function selectInvestmentStrategy(strategy) {
+      // Reset all cards
+      document.querySelectorAll('.investment-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Select the clicked card
+      document.getElementById(strategy).classList.add('selected');
+      
+      // Update the annual return based on the strategy
+      const returnInput = document.getElementById('annual-return');
+      
+      switch(strategy) {
+        case 'conservative':
+          returnInput.value = '5';
+          break;
+        case 'moderate':
+          returnInput.value = '7';
+          break;
+        case 'aggressive':
+          returnInput.value = '10';
+          break;
+      }
+      
+      // Update the display
+      document.getElementById('return-value').textContent = returnInput.value + '.00%';
+    }
+
+    function calculateInvestment() {
+      const initialInvestment = parseFloat(document.getElementById('initial-investment').value) || 0;
+      const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 0;
+      const annualReturn = parseFloat(document.getElementById('annual-return').value) || 0;
+      const investmentPeriod = parseInt(document.getElementById('investment-period').value) || 0;
+      const compoundingFrequency = parseInt(document.getElementById('compounding-frequency').value) || 12;
+      
+      // Update display values
+      document.getElementById('display-years').textContent = investmentPeriod;
+      document.getElementById('display-initial').textContent = formatCurrency(initialInvestment, false);
+      document.getElementById('initial-value').textContent = formatCurrency(initialInvestment);
+      document.getElementById('monthly-value').textContent = formatCurrency(monthlyContribution);
+      document.getElementById('return-value').textContent = annualReturn.toFixed(2) + '%';
+      document.getElementById('period-value').textContent = investmentPeriod + ' years';
+      
+      // Calculate future value
+      const periodicRate = annualReturn / 100 / compoundingFrequency;
+      const totalPeriods = investmentPeriod * compoundingFrequency;
+      
+      let futureValue = initialInvestment * Math.pow(1 + periodicRate, totalPeriods);
+      let totalContributions = monthlyContribution * totalPeriods;
+      
+      if (monthlyContribution > 0) {
+        futureValue += monthlyContribution * ((Math.pow(1 + periodicRate, totalPeriods) - 1) / periodicRate);
+      }
+      
+      const totalInterest = futureValue - initialInvestment - totalContributions;
+      
+      // Update results
+      document.getElementById('future-value').textContent = formatCurrency(futureValue);
+      document.getElementById('total-contributions').textContent = formatCurrency(initialInvestment + totalContributions);
+      document.getElementById('total-interest').textContent = formatCurrency(totalInterest);
+      document.getElementById('display-final').textContent = formatCurrency(futureValue);
+      
+      // Show result displays
+      document.querySelector('.amount-display').style.display = 'block';
+      document.querySelector('.final-amount-container').style.display = 'grid';
+      
+      // Create chart data
+      createChart(initialInvestment, monthlyContribution, annualReturn, investmentPeriod, compoundingFrequency);
+      
+      // Update insights
+      generateInsights(initialInvestment, monthlyContribution, annualReturn, investmentPeriod, futureValue, totalInterest);
+    }
+    
+    function formatCurrency(value, includeSymbol = true) {
+      const formatted = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      return includeSymbol ? '$' + formatted : formatted;
+    }
+    
+    function createChart(initialInvestment, monthlyContribution, annualReturn, years, compoundingFrequency) {
+      const canvas = document.getElementById('investment-chart');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      
+      // Clear previous chart
+      if (window.investmentChart) {
+        window.investmentChart.destroy();
+      }
+      
+      // Generate chart data
+      const labels = [];
+      const principalData = [];
+      const contributionsData = [];
+      const interestData = [];
+      
+      const periodicRate = annualReturn / 100 / compoundingFrequency;
+      
+      let currentPrincipal = initialInvestment;
+      let currentContributions = 0;
+      
+      for (let year = 0; year <= years; year++) {
+        labels.push(`Year ${year}`);
+        
+        // For year 0, just show initial investment
+        if (year === 0) {
+          principalData.push(initialInvestment);
+          contributionsData.push(0);
+          interestData.push(0);
+          continue;
+        }
+        
+        // Calculate values for this year
+        let yearlyContributions = monthlyContribution * 12;
+        currentContributions += yearlyContributions;
+        
+        // Calculate future value at this point
+        let totalAmount = initialInvestment * Math.pow(1 + periodicRate, year * compoundingFrequency);
+        
+        if (monthlyContribution > 0) {
+          totalAmount += monthlyContribution * ((Math.pow(1 + periodicRate, year * compoundingFrequency) - 1) / periodicRate);
+        }
+        
+        let totalInterest = totalAmount - initialInvestment - currentContributions;
+        
+        principalData.push(initialInvestment);
+        contributionsData.push(currentContributions);
+        interestData.push(totalInterest > 0 ? totalInterest : 0);
+      }
+      
+      // Create stacked chart
+      window.investmentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Initial Investment',
+              data: principalData,
+              backgroundColor: '#ff6a00',
+              borderColor: '#e65a00',
+              borderWidth: 1
+            },
+            {
+              label: 'Contributions',
+              data: contributionsData,
+              backgroundColor: '#2196F3',
+              borderColor: '#1976D2',
+              borderWidth: 1
+            },
+            {
+              label: 'Interest',
+              data: interestData,
+              backgroundColor: '#4CAF50',
+              borderColor: '#388E3C',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              stacked: true,
+              ticks: {
+                color: '#e0e0e0'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            y: {
+              stacked: true,
+              ticks: {
+                callback: function(value) {
+                  return '$' + value.toLocaleString();
+                },
+                color: '#e0e0e0'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#e0e0e0'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += '$' + context.parsed.y.toLocaleString();
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function generateInsights(initialInvestment, monthlyContribution, annualReturn, investmentPeriod, futureValue, totalInterest) {
+      const insightsList = document.getElementById('insights-list');
+      if (!insightsList) return;
+      
+      insightsList.innerHTML = '';
+      
+      const insights = [];
+      
+      // Calculate some metrics for insights
+      const totalInvested = initialInvestment + (monthlyContribution * investmentPeriod * 12);
+      const interestToInvestedRatio = totalInterest / totalInvested;
+      
+      // Add insights based on the calculation results
+      if (interestToInvestedRatio > 1) {
+        insights.push({
+          title: 'Power of Compounding',
+          content: 'Your investment will earn more in interest than you contribute. Compound growth is working hard for you!',
+          icon: 'fa-chart-line'
+        });
+      }
+      
+      if (monthlyContribution > 0) {
+        const doubledContribution = calculateWithMonthly(initialInvestment, monthlyContribution * 2, annualReturn, investmentPeriod);
+        insights.push({
+          title: 'Double Your Contributions',
+          content: `Doubling your monthly contribution to $${(monthlyContribution * 2).toFixed(2)} could result in ${formatCurrency(doubledContribution)} after ${investmentPeriod} years.`,
+          icon: 'fa-coins'
+        });
+      }
+      
+      if (investmentPeriod < 20) {
+        const extendedPeriod = investmentPeriod + 5;
+        const extendedValue = calculateWithMonthly(initialInvestment, monthlyContribution, annualReturn, extendedPeriod);
+        insights.push({
+          title: 'Extend Your Timeline',
+          content: `Adding 5 more years to your investment period could increase your final amount to ${formatCurrency(extendedValue)}.`,
+          icon: 'fa-hourglass-half'
+        });
+      }
+      
+      if (annualReturn < 8) {
+        const highReturnValue = calculateWithMonthly(initialInvestment, monthlyContribution, annualReturn + 2, investmentPeriod);
+        insights.push({
+          title: 'Higher Return Potential',
+          content: `A ${(annualReturn + 2).toFixed(1)}% return rate could grow your investment to ${formatCurrency(highReturnValue)}.`,
+          icon: 'fa-arrow-trend-up'
+        });
+      }
+      
+      // Always add a time value of money insight
+      insights.push({
+        title: 'Time Value of Money',
+        content: `Your $${initialInvestment.toFixed(2)} initial investment could be worth ${formatCurrency(futureValue)} in ${investmentPeriod} years.`,
+        icon: 'fa-clock'
+      });
+      
+      // Randomly select 3 insights to display
+      const randomInsights = insights.sort(() => 0.5 - Math.random()).slice(0, 3);
+      
+      randomInsights.forEach(insight => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.innerHTML = `
+          <div class="suggestion-icon">
+            <i class="fas ${insight.icon}"></i>
+          </div>
+          <div class="suggestion-content">
+            <h3>${insight.title}</h3>
+            <p>${insight.content}</p>
+          </div>
+        `;
+        insightsList.appendChild(item);
+      });
+    }
+    
+    function calculateWithMonthly(initialInvestment, monthlyContribution, annualReturn, years) {
+      const periodicRate = annualReturn / 100 / 12;
+      const totalPeriods = years * 12;
+      
+      let futureValue = initialInvestment * Math.pow(1 + periodicRate, totalPeriods);
+      
+      if (monthlyContribution > 0) {
+        futureValue += monthlyContribution * ((Math.pow(1 + periodicRate, totalPeriods) - 1) / periodicRate);
+      }
+      
+      return futureValue;
+    }
+    
+    // Refresh insights button
+    document.getElementById('refresh-insights').addEventListener('click', function() {
+      const initialInvestment = parseFloat(document.getElementById('initial-investment').value) || 0;
+      const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 0;
+      const annualReturn = parseFloat(document.getElementById('annual-return').value) || 0;
+      const investmentPeriod = parseInt(document.getElementById('investment-period').value) || 0;
+      
+      // Get future value from displayed result
+      const futureValueText = document.getElementById('future-value').textContent;
+      const futureValue = parseFloat(futureValueText.replace(/[^0-9.-]+/g, ''));
+      
+      // Get total interest from displayed result
+      const totalInterestText = document.getElementById('total-interest').textContent;
+      const totalInterest = parseFloat(totalInterestText.replace(/[^0-9.-]+/g, ''));
+      
+      generateInsights(initialInvestment, monthlyContribution, annualReturn, investmentPeriod, futureValue, totalInterest);
+    });
+    
+    // Update copyright year
+    document.getElementById('current-year').textContent = new Date().getFullYear().toString();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enomy-Finances</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            background-color: #fdfdfd;
+        }
+    
+        .support-banner {
+            background-color: #fff4e5;
+            color: #000b1c;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #1b1b1b;
+        }
+
+        section.full-screen {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+    
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+    
+        h1, h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+    
+        .highlight {
+            color: #ff6a00;
+        }
+    
+        .link-button {
+            text-decoration: none;
+            background-color: #ff6a00;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-top: 20px;
+            display: inline-block;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 106, 0, 0.3);
+        }
+    
+        .link-button:hover {
+            background-color: #e65a00;
+            box-shadow: 0 6px 14px rgba(255, 106, 0, 0.4);
+            transform: scale(1.05);
+        }
+    
+        .footer {
+            background-color: #151520;
+            color: #cecece;
+            padding: 40px 0;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ff6a00;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section a {
+            color: #cecece;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff6a00;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+    
+        .mini-section {
+            margin-top: 30px;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    
+        .mini-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 300px;
+            transition: background 0.3s;
+        }
+    
+        .mini-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    
+        .mini-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+    
+        .mini-card p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+      /* Chatbot Styles */
+      .chatbot-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 320px;
+        background: rgba(25, 25, 40, 0.95);
+        border: 1px solid #ffaa3a55;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(255, 170, 58, 0.2);
+        overflow: hidden;
+        z-index: 999;
+      }
+  
+      .chatbot-header {
+        background: #e65a00;
+        color: #fff;
+        padding: 12px;
+        text-align: center;
+        font-weight: bold;
+      }
+  
+      .chatbot-messages {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        color: #fff;
+        font-size: 0.95em;
+        background: rgba(0, 0, 0, 0.3);
+      }
+  
+      .chatbot-messages p {
+        margin: 6px 0;
+      }
+  
+      .chatbot-input {
+        display: flex;
+        border-top: 1px solid #ffaa3a33;
+      }
+  
+      .chatbot-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background: #333;
+        color: #fff;
+        border-bottom-left-radius: 15px;
+        outline: none;
+      }
+  
+      .chatbot-input button {
+        width: 80px;
+        padding: 10px;
+        background: #ff6a00;
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        border-bottom-right-radius: 15px;
+        cursor: pointer;
+      }
+      
+      /* Navbar Styles */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #0f1016;
+        padding: 10px 20px;
+        color: white;
+        font-family: Arial, sans-serif;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .navbar-left {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-left .logo img {
+        height: 40px;
+      }
+      
+      .navbar-center {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-center a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: 500;
+        font-size: 15px;
+        position: relative;
+        transition: color 0.3s;
+      }
+      
+      .navbar-center a:hover {
+        color: #ff6a00;
+      }
+      
+      .navbar-center a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #ff6a00;
+        transition: width 0.3s;
+      }
+      
+      .navbar-center a:hover::after {
+        width: 100%;
+      }
+
+      .navbar-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-right a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        font-weight: 600;
+      }
+
+      .btn {
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+      
+      .btn:hover {
+        transform: scale(1.05);
+      }
+
+      .btn-signup {
+        background-color: #e65a00;
+        color: white;
+      }
+
+      .btn-login {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      /* Profile Icon */
+      #profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-image: url('https://cdn-icons-png.flaticon.com/512/847/847969.png'); /* default icon */
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        display: none; /* hidden by default, shown when logged in */
+        border: 2px solid #e65a00;
+        box-shadow: 0 0 5px rgba(230, 90, 0, 0.7);
+        margin-left: 15px;
+        flex-shrink: 0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      
+      #profile-icon:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 8px rgba(230, 90, 0, 0.9);
+      }
+
+      /* Overlay & Sidebar */
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(2px);
+        display: none;
+        z-index: 998;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+      }
+
+      #overlay.active {
+        display: block;
+        opacity: 1;
+      }
+
+      #sidebar {
+        position: fixed;
+        top: 0;
+        right: -350px;
+        width: 350px;
+        height: 100%;
+        background-color: #161620;
+        color: white;
+        transition: right 0.3s ease;
+        z-index: 1000;
+        box-sizing: border-box;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #sidebar.open {
+        right: 0;
+      }
+      
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .sidebar-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #ff6a00;
+      }
+
+      .close-sidebar {
+        font-size: 24px;
+        cursor: pointer;
+        color: #cccccc;
+        transition: color 0.2s ease;
+      }
+      
+      .close-sidebar:hover {
+        color: #ff6a00;
+      }
+      
+      .sidebar-user {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .sidebar-user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 15px;
+        border: 2px solid #ff6a00;
+        background-size: cover;
+        background-position: center;
+      }
+      
+      .sidebar-user-info {
+        flex: 1;
+      }
+      
+      .sidebar-user-info h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+      
+      .sidebar-user-info p {
+        margin: 5px 0 0;
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+      
+      .sidebar-section {
+        padding: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .sidebar-section-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #888;
+        margin-bottom: 15px;
+      }
+
+      #sidebar a {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        padding: 10px 0;
+        transition: color 0.2s ease;
+      }
+      
+      #sidebar a i {
+        width: 24px;
+        margin-right: 10px;
+        text-align: center;
+      }
+
+      #sidebar a:hover {
+        color: #ff6a00;
+      }
+      
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      /* Modals */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+        z-index: 1100;
+        backdrop-filter: blur(5px);
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .modal-active {
+        display: flex;
+      }
+      
+      .modal-content {
+        background-color: #1a1a24;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 30px;
+        position: relative;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .modal-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #ff6a00;
+      }
+      
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #cccccc;
+        transition: color 0.2s ease;
+      }
+      
+      .modal-close:hover {
+        color: #ff6a00;
+      }
+      
+      .profile-section {
+        margin-bottom: 25px;
+      }
+      
+      .profile-pic-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ff6a00;
+        margin-bottom: 15px;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+      
+      .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        background-color: #2a2a36;
+        border: 1px solid #3a3a48;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+      }
+      
+      .form-control:focus {
+        outline: none;
+        border-color: #ff6a00;
+        box-shadow: 0 0 0 2px rgba(255, 106, 0, 0.25);
+      }
+      
+      .btn-form {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff6a00;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+      }
+      
+      .btn-form:hover {
+        background-color: #e65400;
+      }
+      
+      .btn-danger {
+        background-color: #dc3545;
+      }
+      
+      .btn-danger:hover {
+        background-color: #c82333;
+      }
+      
+      /* Search icon repositioned */
+      .search-icon {
+        position: fixed;
+        top: 15px;
+        right: 160px;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+        z-index: 1001;
+        padding: 8px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+      
+      .search-icon:hover {
+        background-color: #e65a00;
+        transform: scale(1.1);
+      }
+
+      /* Add padding to top of content to compensate for fixed navbar */
+      .content-wrapper {
+        padding-top: 60px;
+      }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="navbar-left">
+        <a href="/" class="logo">
+            <img src="images/Brand.png" alt="Enomy Logo" />
+        </a>
+    </div>
+    
+    <div class="navbar-center">
+        <a href="main.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="rates.html">Rates</a>
+        <a href="services.html">Services</a>
+        <a href="investment-calculator.html">Calculator</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    
+    <div class="navbar-right">
+        <a href="enomy.html">Home</a>
+        <a href="signup.html" id="signup-link"><button id="signup-btn" class="btn btn-signup">Sign Up</button></a>
+        <a href="login.html" id="login-link"><button id="login-btn" class="btn btn-login">Log In</button></a>
+        <!-- Profile icon -->
+        <div id="profile-icon" title="My Profile" onclick="toggleSidebar()"></div>
+        <div id="profile-name" style="color: white; font-size: 12px; margin-top: 5px;"></div>
+    </div>
+    
+    <!-- Search icon -->
+    <div class="search-icon" onclick="window.location.href='finance-news.html';">
+        🔍
+    </div>
+</nav>
+
+<!-- Overlay -->
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar Menu -->
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2>Enomy</h2>
+        <span class="close-sidebar" onclick="closeSidebar()">×</span>
+    </div>
+    
+    <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="sidebar-avatar"></div>
+        <div class="sidebar-user-info">
+            <h3 id="sidebar-username">Username</h3>
+            <p>Member since <span id="member-since">2025</span></p>
+        </div>
+    </div>
+    
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Financial Tools</div>
+        <a href="CurrencyConversion.html"><i class="fas fa-exchange-alt"></i> Currency Converter</a>
+        <a href="basic-savings-plan.html"><i class="fas fa-piggy-bank"></i> Basic Savings Plan</a>
+        <a href="savings-plan-plus.html"><i class="fas fa-chart-line"></i> Savings Plan Plus</a>
+        <a href="management-investment-stock.html"><i class="fas fa-chart-pie"></i> Managed Stock Investment</a>
+        <a href="investment-calculator.html"><i class="fas fa-calculator"></i> Investment Calculator</a>
+    </div>
+    
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Account</div>
+        <a href="#" id="my-profile-link" onclick="openModal('profile-modal')"><i class="fas fa-user"></i> My Profile</a>
+        <a href="#" id="settings-link" onclick="openModal('settings-modal')"><i class="fas fa-cog"></i> Settings</a>
+        <a href="#" id="change-password-link" onclick="openModal('change-password-modal')"><i class="fas fa-key"></i> Change Password</a>
+        <a href="#" id="delete-account-link" onclick="openModal('delete-account-modal')"><i class="fas fa-trash-alt"></i> Delete Account</a>
+    </div>
+    
+    <div class="sidebar-footer">
+        <a href="/logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>My Profile</h3>
+            <button class="modal-close" onclick="closeModal('profile-modal')">&times;</button>
+        </div>
+        
+        <div class="profile-section">
+            <div class="profile-pic-container">
+                <img id="current-profile-pic" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile Picture" class="profile-pic">
+                <form id="profile-form" enctype="multipart/form-data" action="/upload-profile-pic" method="POST">
+                    <label for="profile-pic" class="btn btn-form">Change Profile Picture</label>
+                    <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display: none;" onchange="previewImage(this)"/>
+                    <button type="submit" class="btn btn-form" style="margin-top: 10px;">Save Picture</button>
+                </form>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" disabled>
+            </div>
+            
+            <div class="form-group">
+                <label for="joined-date">Member Since</label>
+                <input type="text" id="joined-date" class="form-control" disabled>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Modal -->
+<div id="settings-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Account Settings</h3>
+            <button class="modal-close" onclick="closeModal('settings-modal')">&times;</button>
+        </div>
+        
+        <form id="settings-form">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="non-binary">Non-binary</option>
+                    <option value="prefer-not">Prefer not to say</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" class="form-control">
+            </div>
+            
+            <button type="button" class="btn btn-form" onclick="saveSettings()">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div id="change-password-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Change Password</h3>
+            <button class="modal-close" onclick="closeModal('change-password-modal')">&times;</button>
+        </div>
+        
+        <form id="password-form">
+            <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirm New Password</label>
+                <input type="password" id="confirm-password" class="form-control">
+            </div>
+            
+            <button type="button" class="btn btn-form" onclick="changePassword()">Update Password</button>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Account Modal -->
+<div id="delete-account-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Delete Account</h3>
+            <button class="modal-close" onclick="closeModal('delete-account-modal')">&times;</button>
+        </div>
+        
+        <div class="alert alert-danger" style="padding: 15px; background-color: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.3); border-radius: 5px; margin-bottom: 20px;">
+            <p><strong>Warning:</strong> This action is permanent and cannot be undone. All your data will be permanently removed.</p>
+        </div>
+        
+        <form id="delete-form">
+            <div class="form-group">
+                <label for="delete-reason">Reason for leaving (optional)</label>
+                <textarea id="delete-reason" class="form-control" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="delete-password">Enter your password to confirm</label>
+                <input type="password" id="delete-password" class="form-control">
+            </div>
+            
+            <button type="button" class="btn btn-form btn-danger" onclick="deleteAccount()">Delete My Account</button>
+        </form>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <!-- SECTION 1: Welcome Section-->
+    <section style="position: relative; width: 100%; height: 100vh; overflow: hidden;">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline
+               style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;">
+          <source src="images/Welcomedemo.mov" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      
+        <!-- Soft dark overlay -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                    background-color: rgba(0, 0, 0, 0.4); z-index: 2;"></div>
+      
+        <!-- Get Started Button -->
+        <div style="position: relative; z-index: 3; width: 100%; height: 100%;
+                    display: flex; justify-content: center; align-items: flex-end;
+                    padding-bottom: 14vh; box-sizing: border-box;">
+          <a href="login.html" class="link-button"
+             style="font-size: 1.8rem; padding: 16px 36px; background-color: #e65a00;
+                    color: black; text-decoration: none; border-radius: 50px;
+                    font-weight: 600; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: transform 0.3s ease;">
+            Get Started
+          </a>
+        </div>
+    </section>
+      
+    <!-- SECTION 2: Gradient Intro -->
+    <section id="intro" class="full-screen" style="background-image: url('images/gradient.png'); background-size: cover;">
+        <div class="overlay" style="padding: 60px 10vw; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; height: 100%;">
+          
+          <h2 style="font-size: 3rem;">Let's Get You Started with <span class="highlight">Smart Finances</span></h2>
+          
+          <!-- Mini Cards (Images) -->
+          <div class="mini-section" style="margin-top: 40px; display: flex; gap: 100px; flex-wrap: wrap;">
+            
+            <div class="mini-card" style="flex: 1; min-width: 380px; max-width: 580px; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+              <img src="images/Section2.jpg" alt="Section 2 Image 1" style="width: 100%; height: auto; display: block;">
+            </div>
+            
+            <div class="mini-card" style="flex: 1; min-width: 380px; max-width: 580px; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+              <img src="images/Section2.1.jpg" alt="Section 2 Image 2" style="width: 100%; height: auto; display: block;">
+            </div>
+          </div>
+        </div>
+    </section>
+  
+    <!-- SECTION 3: Savings and Investments -->
+    <section id="savings" class="full-screen" style="background-image: url('images/finance-stack-bars.png');">
+        <div class="overlay">
+            <h2>View Your <span class="highlight">Savings & Investments</span></h2>
+            <a href="savings.html" class="link-button" target="_blank">Get Access to the Invst. Calculator</a>
+        </div>
+    </section>
+  
+    <!-- SECTION 4: Market Section -->
+    <section id="market" class="full-screen" style="background-image: url('images/market-section.jpg');">
+        <div class="overlay">
+            <h2>Track the <span class="highlight">Market</span></h2>
+            <a href="market.html" class="link-button" target="_blank">View Market Statistics</a>
+        </div>
+    </section>
+  
+    <!-- SECTION 5: Portfolio Management Section -->
+    <section id="portfolio" class="full-screen" style="background-image: url('images/portfolio-management.jpg');">
+        <div class="overlay">
+            <h2>Manage Your <span class="highlight">Portfolio</span></h2>
+            <a href="portfolio.html" class="link-button" target="_blank">Adjust Your Investments</a>
+        </div>
+    </section>
+  
+    <!-- SECTION 6: Learning Resources Section -->
+    <section id="education" class="full-screen" style="background-image: url('images/learning-resources.jpg');">
+        <div class="overlay">
+            <h2>Learn & <span class="highlight">Grow</span></h2>
+            <a href="education.html" class="link-button" target="_blank">Explore Our Learning Resources</a>
+        </div>
+    </section>
+  
+    <!-- SECTION 7: Customer Support Section -->
+    <section id="support" class="full-screen" style="background-image: url('images/customer-support-bg.jpg');">
+        <div class="overlay">
+            <h2>We're Here to <span class="highlight">Help</span></h2>
+            <a href="support.html" class="link-button" target="_blank">Contact Customer Support</a>
+        </div>
+    </section>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <span>Enomy Assistant</span>
+        </div>
+        <div class="chatbot-messages">
+            <p><strong>Enomy Bot:</strong> Hello! How can I help you today?</p>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type your question...">
+            <button>Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>About Enomy</h3>
+            <ul>
+                <li><a href="about.html">Our Story</a></li>
+                <li><a href="about.html#mission">Our Mission</a></li>
+                <li><a href="about.html#team">Our Team</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Products</h3>
+            <ul>
+                <li><a href="basic-savings-plan.html">Basic Savings Plan</a></li>
+                <li><a href="savings-plan-plus.html">Savings Plan Plus</a></li>
+                <li><a href="management-investment-stock.html">Stock Investment</a></li>
+                <li><a href="investment-calculator.html">Investment Calculator</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="terms-of-service.html">Terms of Service</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="disclaimer.html">Disclaimer</a></li>
+                <li><a href="security.html">Security</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; <span id="footer-year">2025</span> Enomy Finance. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Check if user is logged in and update UI accordingly
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if user is logged in (either via Flask session or local storage)
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' || localStorage.getItem('isLoggedIn') === 'true';
+        
+        if (isLoggedIn) {
+            // Hide login/signup buttons
+            document.getElementById('signup-link').style.display = 'none';
+            document.getElementById('login-link').style.display = 'none';
+            
+            // Show profile icon
+            const profileIcon = document.getElementById('profile-icon');
+            profileIcon.style.display = 'block';
+            
+            // Set user data in sidebar and profile modal
+            const username = sessionStorage.getItem('username') || localStorage.getItem('username') || 'User';
+            const profilePic = sessionStorage.getItem('profilePic') || localStorage.getItem('profilePic');
+            const email = sessionStorage.getItem('email') || localStorage.getItem('email') || 'user@example.com';
+            const joinedDate = sessionStorage.getItem('joinedDate') || localStorage.getItem('joinedDate') || 'January 2025';
+            
+            // Set username in sidebar and profile
+            document.getElementById('sidebar-username').textContent = username;
+            document.getElementById('display-username').value = username;
+            document.getElementById('joined-date').value = joinedDate;
+            document.getElementById('member-since').textContent = joinedDate;
+            
+            if (document.getElementById('fullname')) {
+                document.getElementById('fullname').value = username;
+            }
+            
+            if (document.getElementById('email')) {
+                document.getElementById('email').value = email;
+            }
+            
+            // Set profile picture if available
+            if (profilePic && profilePic !== '') {
+                const picUrl = profilePic.startsWith('http') ? profilePic : '/uploads/' + profilePic;
+                document.getElementById('sidebar-avatar').style.backgroundImage = `url('${picUrl}')`;
+                document.getElementById('current-profile-pic').src = picUrl;
+                profileIcon.style.backgroundImage = `url('${picUrl}')`;
+            }
+        }
+        
+        // Set current year in footer
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    });
+    
+    // Sidebar toggle functions
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('overlay').classList.add('active');
+    }
+    
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('active');
+    }
+    
+    // Modal functions
+    function openModal(modalId) {
+        closeSidebar();
+        document.getElementById(modalId).classList.add('modal-active');
+    }
+    
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('modal-active');
+    }
+    
+    // Chatbot toggle
+    document.getElementById('chatbot-toggle').addEventListener('click', function() {
+        const chatbotBox = document.getElementById('chatbot-box');
+        if (chatbotBox.style.display === 'block') {
+            chatbotBox.style.display = 'none';
+        } else {
+            chatbotBox.style.display = 'block';
+            document.getElementById('chatbot-input').focus();
+        }
+    });
+    
+    // Chatbot send message
+    document.getElementById('chatbot-send').addEventListener('click', sendChatMessage);
+    document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendChatMessage();
+        }
+    });
+    
+    function sendChatMessage() {
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotMessages = document.getElementById('chatbot-messages');
+        const message = chatbotInput.value.trim();
+        
+        if (message === '') return;
+        
+        // Add user message
+        chatbotMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+        chatbotInput.value = '';
+        
+        // Scroll to bottom
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        
+        // Send message to backend and get response
+        fetch('/ask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question: message }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            chatbotMessages.innerHTML += `<p><strong>Enomy Bot:</strong> ${data.answer}</p>`;
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            chatbotMessages.innerHTML += `<p><strong>Enomy Bot:</strong> Sorry, I'm having trouble connecting right now. Please try again later.</p>`;
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        });
+    }
+    
+    // Profile picture preview
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                document.getElementById('current-profile-pic').src = e.target.result;
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    // Profile form submission - modified to handle the profile picture upload
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        fetch('/upload-profile-pic', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update profile pictures throughout the interface
+                const picUrl = data.imageUrl;
+                document.getElementById('profile-icon').style.backgroundImage = `url('${picUrl}')`;
+                document.getElementById('sidebar-avatar').style.backgroundImage = `url('${picUrl}')`;
+                
+                // Store in session and local storage
+                sessionStorage.setItem('profilePic', picUrl);
+                localStorage.setItem('profilePic', picUrl);
+                
+                alert('Profile picture updated successfully!');
+                closeModal('profile-modal');
+            } else {
+                alert('Error updating profile picture: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating your profile picture.');
+        });
+    });
+    
+    // Function to save settings
+    function saveSettings() {
+        const fullname = document.getElementById('fullname').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const location = document.getElementById('location').value;
+        
+        // Store in session and local storage
+        sessionStorage.setItem('username', fullname);
+        localStorage.setItem('username', fullname);
+        sessionStorage.setItem('email', email);
+        localStorage.setItem('email', email);
+        
+        // Update UI elements
+        document.getElementById('sidebar-username').textContent = fullname;
+        document.getElementById('display-username').value = fullname;
+        
+        // In a real app, you would send this data to the server
+        // For demo purposes, show success message
+        alert('Settings saved successfully!');
+        closeModal('settings-modal');
+    }
+    
+    // Toggle password visibility
+    function togglePasswordVisibility(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling;
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+    
+    // Function to verify current password
+    function verifyCurrentPassword() {
+        const currentPassword = document.getElementById('current-password').value;
+        
+        if (!currentPassword) {
+            alert('Please enter your current password');
+            return;
+        }
+        
+        // In a real app, you would verify with the server
+        // For demo, we'll simulate a successful verification
+        document.getElementById('new-password').disabled = false;
+        document.getElementById('confirm-password').disabled = false;
+        document.getElementById('verify-password-btn').style.display = 'none';
+        document.getElementById('change-password-btn').style.display = 'block';
+        
+        alert('Password verified! You can now set a new password.');
+    }
+    
+    // Function to change password
+    function changePassword() {
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (!newPassword) {
+            alert('Please enter a new password');
+            return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+            alert('New passwords do not match');
+            return;
+        }
+        
+        // In a real app, you would send this data to the server
+        // For demo purposes, show success message
+        alert('Password updated successfully!');
+        closeModal('change-password-modal');
+        
+        // Reset the form for next time
+        document.getElementById('current-password').value = '';
+        document.getElementById('new-password').value = '';
+        document.getElementById('confirm-password').value = '';
+        document.getElementById('new-password').disabled = true;
+        document.getElementById('confirm-password').disabled = true;
+        document.getElementById('verify-password-btn').style.display = 'block';
+        document.getElementById('change-password-btn').style.display = 'none';
+    }
+    
+    // Function to delete account
+    function deleteAccount() {
+        const password = document.getElementById('delete-password').value;
+        
+        if (!password) {
+            alert('Please enter your password to confirm account deletion');
+            return;
+        }
+        
+        // In a real app, you would send this data to the server
+        // For demo purposes, log out the user
+        sessionStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('username');
+        localStorage.removeItem('username');
+        sessionStorage.removeItem('email');
+        localStorage.removeItem('email');
+        sessionStorage.removeItem('profilePic');
+        localStorage.removeItem('profilePic');
+        
+        alert('Your account has been deleted. You will be logged out.');
+        window.location.href = 'logout.html';
+    }
+    
+    // Allow editing of username in profile modal
+    document.getElementById('display-username').addEventListener('change', function() {
+        const newUsername = this.value;
+        document.getElementById('sidebar-username').textContent = newUsername;
+        
+        // Store in session and local storage
+        sessionStorage.setItem('username', newUsername);
+        localStorage.setItem('username', newUsername);
+        
+        // Also update fullname in settings if opened later
+        if (document.getElementById('fullname')) {
+            document.getElementById('fullname').value = newUsername;
+        }
+    });
+</script>
+</body>
+</html>

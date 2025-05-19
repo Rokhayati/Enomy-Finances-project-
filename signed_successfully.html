@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Successfully Logged and Secure!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 20px 0;
+      animation: fadeIn 1.5s ease-in-out;
+      color: #006064;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+  <!-- DotLottie Player Script -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</head>
+<body>
+    <h1>Successfully Signed and Secure!</h1>
+  <dotlottie-player 
+    src="https://lottie.host/86aebe95-85d0-4487-be59-0a5f41c78972/5bRy1MCdCd.lottie" 
+    background="transparent" 
+    speed="1" 
+    style="width: 300px; height: 300px;" 
+    autoplay>
+  </dotlottie-player>
+
+
+  <script>
+    // Redirect to enomy.html after 4 seconds
+    setTimeout(() => {
+      window.location.href = 'templates/enomy.html';
+    }, 4000);
+  </script>
+</body>
+</html>

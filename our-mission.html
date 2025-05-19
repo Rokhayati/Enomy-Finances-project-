@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Mission - Enomy Finance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f1016;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-left img {
+            height: 40px;
+        }
+        
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        
+        .navbar-right a:hover {
+            color: #ff6a00;
+        }
+        
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 span {
+            color: #ff6a00;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .mission-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .mission-section h2 {
+            font-size: 2.5rem;
+            color: #0f1016;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .mission-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #ff6a00;
+            border-radius: 2px;
+        }
+        
+        .mission-section p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .value-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-icon {
+            font-size: 2.5rem;
+            color: #ff6a00;
+            margin-bottom: 20px;
+        }
+        
+        .value-card h3 {
+            font-size: 1.5rem;
+            color: #0f1016;
+            margin-bottom: 15px;
+        }
+        
+        .impact-section {
+            margin-top: 80px;
+            text-align: center;
+        }
+        
+        .impact-section h2 {
+            font-size: 2.5rem;
+            color: #0f1016;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .impact-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: #ff6a00;
+            border-radius: 2px;
+        }
+        
+        .impact-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            min-width: 200px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6a00;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .cta-section {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 10px;
+            margin-top: 80px;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #ff6a00;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #e65a00;
+            transform: translateY(-5px);
+        }
+        
+        .footer {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 100px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #ff6a00;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mission-section {
+                padding: 30px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="enomy.html">
+                <img src="images/Brand.png" alt="Enomy Logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            <a href="enomy.html">Home</a>
+            <a href="our-story.html">Our Story</a>
+            <a href="our-mission.html">Our Mission</a>
+            <a href="our-team.html">Our Team</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+    
+    <div class="hero">
+        <h1>Our <span>Mission</span></h1>
+        <p>Democratizing financial tools and knowledge to empower everyone to take control of their financial future.</p>
+    </div>
+    
+    <div class="content">
+        <div class="mission-section">
+            <h2>Our Mission</h2>
+            <p>At Enomy, our mission is simple yet ambitious: to make sophisticated financial tools and knowledge accessible to everyone, regardless of their background, experience, or account balance.</p>
+            <p>We believe that financial empowerment is a fundamental right, not a privilege. By combining cutting-edge technology with user-centric design and jargon-free education, we're building a platform that helps people navigate their financial journey with confidence and clarity.</p>
+            <p>Whether you're saving for your first emergency fund or managing a diverse investment portfolio, Enomy provides the tools, insights, and support you need to make informed decisions and achieve your financial goals.</p>
+        </div>
+        
+        <h2 style="text-align: center; margin-bottom: 50px;">Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-unlock-alt"></i>
+                </div>
+                <h3>Accessibility</h3>
+                <p>We design our tools and content to be understood and used by everyone, regardless of their financial background or expertise. We eliminate jargon and complexity without sacrificing depth or functionality.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Trust & Security</h3>
+                <p>We treat your financial data with the utmost respect and security. Trust is the foundation of our relationship with users, and we earn it through transparency, robust protection measures, and ethical data practices.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Innovation</h3>
+                <p>We continuously push the boundaries of what's possible in financial technology, seeking new ways to simplify complex processes, deliver meaningful insights, and create intuitive user experiences.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3>Education</h3>
+                <p>We believe in the power of knowledge. Beyond just providing tools, we're committed to helping our users understand the "why" behind financial decisions and developing their financial literacy.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Community</h3>
+                <p>Financial journeys don't happen in isolation. We foster a supportive community where users can learn from each other, share experiences, and grow together.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Inclusivity</h3>
+                <p>We design for diversity, ensuring our platform is welcoming and useful for people from all walks of life, cultures, and economic circumstances around the world.</p>
+            </div>
+        </div>
+        
+        <div class="impact-section">
+            <h2>Our Impact</h2>
+            <div class="impact-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">$500M+</div>
+                    <div class="stat-label">Savings Facilitated</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">4.8/5</div>
+                    <div class="stat-label">User Satisfaction</div>
+                </div>
+            </div>
+            <p>These numbers represent real people making real progress on their financial journeys. Behind every statistic is a story of someone gaining confidence, security, and freedom through better financial management.</p>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Join Our Mission</h2>
+            <p>Whether you're just starting your financial journey or looking to take your savings and investments to the next level, Enomy is here to support you every step of the way.</p>
+            <a href="signup.html" class="cta-button">Get Started Today</a>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Enomy Finance. All Rights Reserved.</p>
+        <p><a href="enomy.html">Home</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

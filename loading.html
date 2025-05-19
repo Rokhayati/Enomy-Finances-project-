@@ -1,0 +1,57 @@
+<!-- loading.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Processing...</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #e0f7fa;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .loader {
+            border: 12px solid #f3f3f3;
+            border-top: 12px solid #e65e00;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .msg {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #102b5d;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            const source = params.get('source'); // ?source=signup or ?source=login
+            let redirectTo;
+
+            if (source === 'signup') {
+                document.querySelector('.msg').textContent = "Registering your account... Please wait";
+                redirectTo = 'signed_successfully.html';
+            } else {
+                document.querySelector('.msg').textContent = "Logging you in... Please wait";
+                redirectTo = 'logged_successfully.html';
+            }
+
+            setTimeout(() => {
+                window.location.href = redirectTo;
+            }, 2000);
+        }
+    </script>
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="msg">Processing...</div>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Story - Enomy Finance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f1016;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-left img {
+            height: 40px;
+        }
+        
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        
+        .navbar-right a:hover {
+            color: #ff6a00;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+        
+        .story-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .story-header h1 {
+            font-size: 3rem;
+            color: #0f1016;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .story-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: #ff6a00;
+            border-radius: 2px;
+        }
+        
+        .story-header p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .story-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .story-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: #ff6a00;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+        
+        .timeline-item:nth-child(odd)::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -45px;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6a00;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even)::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -45px;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6a00;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-item-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #0f1016;
+        }
+        
+        .timeline-item-content .date {
+            position: absolute;
+            top: -5px;
+            color: #ff6a00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-item:nth-child(odd) .date {
+            right: -150px;
+        }
+        
+        .timeline-item:nth-child(even) .date {
+            left: -150px;
+        }
+        
+        .founders-section {
+            margin-top: 80px;
+            text-align: center;
+        }
+        
+        .founders-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #0f1016;
+        }
+        
+        .founders-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .founder-card {
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .founder-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .founder-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .founder-info {
+            padding: 20px;
+        }
+        
+        .founder-info h3 {
+            margin-bottom: 5px;
+            color: #0f1016;
+        }
+        
+        .founder-info p.position {
+            color: #ff6a00;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .footer {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 100px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #ff6a00;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .story-timeline::before {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd)::before,
+            .timeline-item:nth-child(even)::before {
+                left: 21px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(odd) .date,
+            .timeline-item:nth-child(even) .date {
+                left: 70px;
+                right: auto;
+                top: -30px;
+            }
+            
+            .founder-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="enomy.html">
+                <img src="images/Brand.png" alt="Enomy Logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            <a href="enomy.html">Home</a>
+            <a href="our-story.html">Our Story</a>
+            <a href="our-mission.html">Our Mission</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+    
+    <div class="content">
+        <div class="story-header">
+            <h1>Our Story</h1>
+            <p>From a simple idea to a transformative financial platform, discover the journey that shaped Enomy into what it is today.</p>
+        </div>
+        
+        <div class="story-timeline">
+            <div class="timeline-item">
+                <div class="date">2020</div>
+                <div class="timeline-item-content">
+                    <h3>The Beginning</h3>
+                    <p>Enomy was born from a simple observation: investing and savings should be accessible to everyone, not just the financial elite. Our founders, coming from diverse backgrounds in finance, technology, and user experience design, came together with a shared vision to democratize financial tools.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="date">2021</div>
+                <div class="timeline-item-content">
+                    <h3>Market Research & Development</h3>
+                    <p>We spent a full year researching the market, interviewing potential users, and developing our core platform. Our team worked tirelessly to design intuitive tools that would make financial management straightforward even for beginners.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="date">2022</div>
+                <div class="timeline-item-content">
+                    <h3>Initial Launch</h3>
+                    <p>Enomy launched with our basic savings calculator and investment projection tools. Within six months, we had welcomed over 10,000 users who provided invaluable feedback that would shape our future development.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="date">2023</div>
+                <div class="timeline-item-content">
+                    <h3>Expansion & Investment</h3>
+                    <p>With growing user interest, we secured our first round of major funding, allowing us to expand our team and add advanced features like portfolio management and market analytics. This was also the year we introduced our Premium and Enterprise tiers.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="date">2024</div>
+                <div class="timeline-item-content">
+                    <h3>Global Reach</h3>
+                    <p>Enomy went international, expanding to serve users across Europe, Asia, and Australia. We introduced multi-currency support and localized financial advice, adapting to different regulatory environments while maintaining our core mission.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="date">2025</div>
+                <div class="timeline-item-content">
+                    <h3>Today & Beyond</h3>
+                    <p>Today, Enomy serves over 1 million users worldwide. We've built an ecosystem of financial tools that grow with our users, from their first savings account to complex investment portfolios. And we're just getting started – our roadmap includes AI-driven personalized financial coaching, expanded educational resources, and deeper integration with the broader financial ecosystem.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="founders-section">
+            <h2>Our Founders</h2>
+            <div class="founders-grid">
+                <div class="founder-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="James Wilson" class="founder-img">
+                    <div class="founder-info">
+                        <h3>James Wilson</h3>
+                        <p class="position">CEO & Co-Founder</p>
+                        <p>With 15 years of experience in investment banking, James brings financial expertise and strategic vision to Enomy.</p>
+                    </div>
+                </div>
+                
+                <div class="founder-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Sarah Chen" class="founder-img">
+                    <div class="founder-info">
+                        <h3>Sarah Chen</h3>
+                        <p class="position">CTO & Co-Founder</p>
+                        <p>A technology innovator with previous roles at Google and fintech startups, Sarah leads Enomy's technical development and data security efforts.</p>
+                    </div>
+                </div>
+                
+                <div class="founder-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Michael Rodriguez" class="founder-img">
+                    <div class="founder-info">
+                        <h3>Michael Rodriguez</h3>
+                        <p class="position">COO & Co-Founder</p>
+                        <p>Michael's background in behavioral economics and user experience design helps ensure Enomy's products are not just powerful, but intuitive and accessible to all.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Enomy Finance. All Rights Reserved.</p>
+        <p><a href="enomy.html">Home</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

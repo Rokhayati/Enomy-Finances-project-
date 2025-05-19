@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Savings and Investments Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Interactive background particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Include navbar -->
+  <!--#include file="navbar.html" -->
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Welcome to the Savings and Investments Predictor</h1>
+      <p>Plan your financial future with our powerful tools and resources. Manage your savings and investments in one place.</p>
+    </div>
+
+    <div class="calculator-body">
+      <div class="input-section">
+        <h2>Find Your Ideal Plan</h2>
+        <form id="plan-finder-form">
+          <div class="input-group">
+            <label for="budget">What is your monthly budget for investing?</label>
+            <select id="budget" name="budget" required>
+              <option value="">Choose an option</option>
+              <option value="low">Less than $100</option>
+              <option value="medium">$100 - $500</option>
+              <option value="high">More than $500</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="risk">What is your risk tolerance?</label>
+            <select id="risk" name="risk" required>
+              <option value="">Choose an option</option>
+              <option value="low">Low - I prefer safety over high returns</option>
+              <option value="medium">Medium - Balanced approach</option>
+              <option value="high">High - I can handle volatility for potentially higher returns</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="duration">How long do you plan to invest?</label>
+            <select id="duration" name="duration" required>
+              <option value="">Choose an option</option>
+              <option value="short">Short-term (1-3 years)</option>
+              <option value="medium">Medium-term (3-7 years)</option>
+              <option value="long">Long-term (7+ years)</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="goal">What is your primary financial goal?</label>
+            <select id="goal" name="goal" required>
+              <option value="">Choose an option</option>
+              <option value="emergency">Build an emergency fund</option>
+              <option value="purchase">Save for a major purchase</option>
+              <option value="retirement">Prepare for retirement</option>
+              <option value="wealth">General wealth building</option>
+            </select>
+          </div>
+
+          <button type="button" id="predict-plan-btn" class="btn">Find My Plan</button>
+        </form>
+        
+        <div id="plan-results" style="display: none;">
+          <h3>Your Recommended Plan</h3>
+          <div id="recommended-plan" class="results">
+            <h2 id="plan-title">Basic Savings</h2>
+            <p id="plan-description">This plan is ideal for your financial situation and goals.</p>
+            <ul class="results-list" id="plan-features">
+              <!-- Plan features will be inserted here -->
+            </ul>
+            <div class="cta-buttons">
+              <a href="investment-calculator.html" class="btn">Try Calculator</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-section">
+        <div class="image-container">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Financial growth illustration">
+        </div>
+
+        <div class="results">
+          <h2>Why Choose Our Platform?</h2>
+          <ul class="results-list">
+            <li><strong>Personalized:</strong> Get recommendations tailored to your goals</li>
+            <li><strong>Comprehensive:</strong> Multiple investment options in one place</li>
+            <li><strong>Educational:</strong> Learn as you plan with helpful resources</li>
+            <li><strong>Secure:</strong> Bank-level encryption for all your data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include footer -->
+  <!--#include file="footer-savings.html" -->
+
+  <script src="main.js"></script>
+  <script>
+    // Plan finder functionality
+    document.getElementById('predict-plan-btn').addEventListener('click', function() {
+      const budget = document.getElementById('budget').value;
+      const risk = document.getElementById('risk').value;
+      const duration = document.getElementById('duration').value;
+      const goal = document.getElementById('goal').value;
+      
+      // Validate form
+      if (!budget || !risk || !duration || !goal) {
+        alert('Please fill out all fields.');
+        return;
+      }
+      
+      // Determine recommended plan
+      let planTitle, planDescription, planFeatures = [];
+      
+      // Basic algorithm to recommend plans based on inputs
+      if (risk === 'low' || duration === 'short' || budget === 'low') {
+        planTitle = "Basic Savings";
+        planDescription = "A low-risk savings plan focused on capital preservation with modest returns.";
+        planFeatures = [
+          "Expected Returns: 1.2% - 2.4% annually",
+          "Monthly Minimum: $50",
+          "No lock-in period",
+          "FDIC insured up to $250,000",
+          "No fees for basic accounts"
+        ];
+      } else if ((risk === 'medium' && duration !== 'short') || 
+                (budget === 'medium' && risk !== 'high')) {
+        planTitle = "Savings Plan Investment";
+        planDescription = "A balanced approach with moderate risk and potential for higher returns.";
+        planFeatures = [
+          "Expected Returns: 3% - 5.5% annually",
+          "Monthly Minimum: $100",
+          "Recommended hold period: 3+ years",
+          "Diversified across multiple asset types",
+          "Annual management fee: 0.3%"
+        ];
+      } else {
+        planTitle = "Management Stock Investment";
+        planDescription = "A higher-risk strategy focused on equity investments for long-term growth.";
+        planFeatures = [
+          "Expected Returns: 6% - 12% annually (potential for higher returns)",
+          "Monthly Minimum: $200",
+          "Recommended hold period: 5+ years",
+          "Strategic stock selection by investment professionals",
+          "Annual management fee: 0.75%"
+        ];
+      }
+      
+      // Display results
+      document.getElementById('plan-title').textContent = planTitle;
+      document.getElementById('plan-description').textContent = planDescription;
+      
+      const featuresEl = document.getElementById('plan-features');
+      featuresEl.innerHTML = '';
+      planFeatures.forEach(feature => {
+        const li = document.createElement('li');
+        li.innerHTML = feature;
+        featuresEl.appendChild(li);
+      });
+      
+      document.getElementById('plan-results').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

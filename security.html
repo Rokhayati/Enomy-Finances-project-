@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Security - Enomy Finance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f1016;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-left img {
+            height: 40px;
+        }
+        
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        
+        .navbar-right a:hover {
+            color: #ff6a00;
+        }
+        
+        .hero-section {
+            margin-top: 80px;
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(to right, #0c121e, #1a1a2e);
+            color: white;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero-section h1 span {
+            color: #ff6a00;
+        }
+        
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .security-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .security-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .security-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ff6a00;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .security-title {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #0f1016;
+        }
+        
+        .security-content p {
+            margin-bottom: 15px;
+        }
+        
+        .security-content ul {
+            margin-bottom: 15px;
+            margin-left: 20px;
+        }
+        
+        .security-content li {
+            margin-bottom: 10px;
+        }
+        
+        .security-tips {
+            background-color: #fff8e1;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .tips-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .tips-header h2 {
+            font-size: 2rem;
+            color: #0f1016;
+            margin-bottom: 15px;
+        }
+        
+        .tips-header p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .tip-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tip-icon {
+            color: #ff6a00;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .tip-title {
+            font-size: 1.2rem;
+            color: #0f1016;
+            margin-bottom: 10px;
+        }
+        
+        .security-contact {
+            background-color: #0f1016;
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .security-contact h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .security-contact p {
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-button {
+            display: inline-block;
+            background-color: #ff6a00;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .contact-button:hover {
+            background-color: #e65a00;
+        }
+        
+        .footer {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #ff6a00;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="enomy.html">
+                <img src="images/Brand.png" alt="Enomy Logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            <a href="enomy.html">Home</a>
+            <a href="our-story.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+    </nav>
+    
+    <div class="hero-section">
+        <h1>Your Security is Our <span>Priority</span></h1>
+        <p>Learn about the robust security measures we implement to protect your data and financial information.</p>
+    </div>
+    
+    <div class="container">
+        <div class="security-card">
+            <div class="security-card-header">
+                <div class="security-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="security-title">Our Security Commitment</h2>
+            </div>
+            <div class="security-content">
+                <p>At Enomy Finance, we understand that trust is the foundation of our relationship with you. We take the security of your personal and financial information extremely seriously and employ industry-leading security measures to ensure your data remains protected at all times.</p>
+                
+                <p>Our security program is built on multiple layers of protection, with continuous monitoring and regular updates to address emerging threats. We are committed to maintaining the highest standards of security throughout our platform.</p>
+            </div>
+        </div>
+        
+        <div class="security-card">
+            <div class="security-card-header">
+                <div class="security-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2 class="security-title">Data Protection</h2>
+            </div>
+            <div class="security-content">
+                <p>Your data is protected by multiple layers of security:</p>
+                
+                <ul>
+                    <li><strong>Encryption:</strong> All sensitive data is encrypted both in transit and at rest using industry-standard encryption protocols (TLS 1.2+, AES-256).</li>
+                    <li><strong>Secure Infrastructure:</strong> Our systems are hosted in SOC 2 Type II certified data centers with physical security measures, redundant power systems, and environmental protections.</li>
+                    <li><strong>Regular Security Audits:</strong> We conduct regular security audits and penetration testing by independent security firms to identify and address potential vulnerabilities.</li>
+                    <li><strong>Limited Access:</strong> We enforce strict access controls and the principle of least privilege for our staff, ensuring that only authorized personnel have access to systems containing user data.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="security-card">
+            <div class="security-card-header">
+                <div class="security-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h2 class="security-title">Account Security</h2>
+            </div>
+            <div class="security-content">
+                <p>We implement multiple measures to ensure your account remains secure:</p>
+                
+                <ul>
+                    <li><strong>Multi-Factor Authentication:</strong> Add an additional layer of security by enabling multi-factor authentication on your account.</li>
+                    <li><strong>Secure Password Requirements:</strong> We enforce strong password requirements and securely hash all passwords using modern algorithms.</li>
+                    <li><strong>Session Management:</strong> Automatic session timeouts after periods of inactivity and the ability to view and terminate active sessions.</li>
+                    <li><strong>Activity Monitoring:</strong> Continuous monitoring for suspicious account activities with real-time alerts for potentially unauthorized access attempts.</li>
+                    <li><strong>Account Recovery:</strong> Secure account recovery processes that verify your identity before allowing access to your account.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="security-card">
+            <div class="security-card-header">
+                <div class="security-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h2 class="security-title">Operational Security</h2>
+            </div>
+            <div class="security-content">
+                <p>Our operational security measures include:</p>
+                
+                <ul>
+                    <li><strong>24/7 Monitoring:</strong> Continuous monitoring of our systems for unauthorized access or unusual activity.</li>
+                    <li><strong>Incident Response:</strong> A comprehensive incident response plan to quickly address and mitigate potential security issues.</li>
+                    <li><strong>Regular Updates:</strong> Timely application of security patches and updates to all systems and dependencies.</li>
+                    <li><strong>Employee Training:</strong> Regular security awareness training for all team members to ensure they understand and follow security best practices.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="security-tips">
+            <div class="tips-header">
+                <h2>Security Best Practices</h2>
+                <p>While we implement robust security measures on our end, here are some tips to help you maintain the security of your account:</p>
+            </div>
+            
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="tip-title">Use Strong, Unique Passwords</h3>
+                    <p>Create complex passwords that include a mix of uppercase and lowercase letters, numbers, and special characters. Use a different password for each of your accounts.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3 class="tip-title">Enable Multi-Factor Authentication</h3>
+                    <p>Add an extra layer of security by enabling multi-factor authentication (MFA) on your Enomy account and other financial services.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3 class="tip-title">Use Secure Networks</h3>
+                    <p>Avoid accessing your financial accounts on public Wi-Fi networks. If you must use public Wi-Fi, consider using a VPN (Virtual Private Network).</p>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="tip-title">Keep Devices Updated</h3>
+                    <p>Regularly update your devices and applications to ensure you have the latest security patches and protections.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="tip-title">Be Wary of Phishing</h3>
+                    <p>Be cautious of emails, texts, or calls asking for your personal information or account details. Enomy will never ask for your password or complete account information via email.</p>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                    <h3 class="tip-title">Log Out When Finished</h3>
+                    <p>Always log out of your account when you're finished, especially when using shared or public devices.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="security-contact">
+            <h2>Report a Security Concern</h2>
+            <p>If you believe you've identified a security vulnerability, suspicious activity on your account, or have concerns about the security of our platform, please contact our security team immediately.</p>
+            <a href="mailto:security@enomyfinance.com" class="contact-button">
+                <i class="fas fa-envelope"></i> Contact Security Team
+            </a>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Enomy Finance. All Rights Reserved.</p>
+        <p><a href="enomy.html">Home</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a> | <a href="disclaimer.html">Disclaimer</a> | <a href="security.html">Security</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rates - Savings and Investments Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Interactive background particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Include navbar -->
+  <!--#include file="navbar.html" -->
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Investment Rates & Plans</h1>
+      <p>Compare our investment plans and current rates to find the option that best suits your financial goals.</p>
+    </div>
+    
+    <div class="page-content">
+      <div class="content-section">
+        <h2 class="section-header">Current Market Rates</h2>
+        <p>Below are the current prevailing rates for various investment vehicles as of May 18, 2023. These rates are updated regularly to reflect market conditions.</p>
+        
+        <table class="rates-table">
+          <thead>
+            <tr>
+              <th>Investment Type</th>
+              <th>Current Rate</th>
+              <th>Historical Average</th>
+              <th>Risk Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>High-Yield Savings</td>
+              <td>2.15% - 3.50%</td>
+              <td>1.50%</td>
+              <td>Very Low</td>
+            </tr>
+            <tr>
+              <td>Certificates of Deposit (1 Year)</td>
+              <td>4.25% - 5.00%</td>
+              <td>2.35%</td>
+              <td>Low</td>
+            </tr>
+            <tr>
+              <td>Certificates of Deposit (5 Year)</td>
+              <td>3.75% - 4.50%</td>
+              <td>2.80%</td>
+              <td>Low</td>
+            </tr>
+            <tr>
+              <td>Treasury Bonds (10 Year)</td>
+              <td>3.70% - 4.50%</td>
+              <td>4.40%</td>
+              <td>Low</td>
+            </tr>
+            <tr>
+              <td>Corporate Bonds (Investment Grade)</td>
+              <td>5.00% - 7.00%</td>
+              <td>5.30%</td>
+              <td>Medium-Low</td>
+            </tr>
+            <tr>
+              <td>Index Funds (S&P 500)</td>
+              <td>8.00% - 10.00%*</td>
+              <td>10.50%</td>
+              <td>Medium</td>
+            </tr>
+            <tr>
+              <td>Balanced Portfolio (60/40)</td>
+              <td>6.00% - 8.00%*</td>
+              <td>7.80%</td>
+              <td>Medium</td>
+            </tr>
+            <tr>
+              <td>Real Estate Investment Trusts</td>
+              <td>5.50% - 10.00%*</td>
+              <td>8.90%</td>
+              <td>Medium-High</td>
+            </tr>
+            <tr>
+              <td>Growth Stock Portfolio</td>
+              <td>9.00% - 15.00%*</td>
+              <td>11.25%</td>
+              <td>High</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <p class="rate-disclaimer">* Expected annual returns based on historical performance. Past performance is not indicative of future results. All investments involve risk and may result in losses.</p>
+      </div>
+      
+      <div class="features-section">
+        <h2 class="section-title">Our Investment Plans</h2>
+        <p class="section-description">We offer several investment strategies designed to meet different financial goals and risk tolerances. Each plan comes with a comprehensive set of tools and resources to help you track and optimize your investments.</p>
+        
+        <div class="investment-options plan-options">
+          <div class="investment-card plan-card">
+            <h3>Basic Savings Plan</h3>
+            <div class="plan-rate">1.2% - 2.4% <span>Expected Annual Return</span></div>
+            <ul>
+              <li><strong>Risk Level:</strong> Very Low</li>
+              <li><strong>Minimum Initial:</strong> $0</li>
+              <li><strong>Minimum Monthly:</strong> $50</li>
+              <li><strong>Maximum Annual:</strong> $20,000</li>
+              <li><strong>Fees:</strong> 0.25% annually</li>
+              <li><strong>Liquidity:</strong> High (access funds anytime)</li>
+              <li><strong>Best For:</strong> Emergency funds, short-term goals</li>
+            </ul>
+            <a href="investment-calculator.html" class="btn btn-secondary">Calculate Returns</a>
+          </div>
+          
+          <div class="investment-card plan-card">
+            <h3>Savings Plan Plus</h3>
+            <div class="plan-rate">3.0% - 5.5% <span>Expected Annual Return</span></div>
+            <ul>
+              <li><strong>Risk Level:</strong> Low to Medium</li>
+              <li><strong>Minimum Initial:</strong> $300</li>
+              <li><strong>Minimum Monthly:</strong> $100</li>
+              <li><strong>Maximum Annual:</strong> $30,000</li>
+              <li><strong>Fees:</strong> 0.30% annually</li>
+              <li><strong>Liquidity:</strong> Medium (some restrictions may apply)</li>
+              <li><strong>Best For:</strong> Medium-term goals (3-7 years)</li>
+            </ul>
+            <a href="investment-calculator.html" class="btn btn-secondary">Calculate Returns</a>
+          </div>
+          
+          <div class="investment-card plan-card">
+            <h3>Managed Stock Investments</h3>
+            <div class="plan-rate">6.0% - 12.0% <span>Expected Annual Return</span></div>
+            <ul>
+              <li><strong>Risk Level:</strong> Medium to High</li>
+              <li><strong>Minimum Initial:</strong> $1,000</li>
+              <li><strong>Minimum Monthly:</strong> $150</li>
+              <li><strong>Maximum Annual:</strong> Unlimited</li>
+              <li><strong>Fees:</strong> 0.75% annually</li>
+              <li><strong>Liquidity:</strong> Medium (recommended 5+ year horizon)</li>
+              <li><strong>Best For:</strong> Long-term growth, retirement</li>
+            </ul>
+            <a href="investment-calculator.html" class="btn btn-secondary">Calculate Returns</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="content-section">
+        <h2 class="section-header">Fee Structure</h2>
+        <p>We believe in transparent pricing with no hidden fees. Our fee structure is designed to be straightforward and competitive:</p>
+        
+        <table class="rates-table fees-table">
+          <thead>
+            <tr>
+              <th>Fee Type</th>
+              <th>Basic Savings</th>
+              <th>Savings Plus</th>
+              <th>Managed Stocks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Annual Management Fee</td>
+              <td>0.25%</td>
+              <td>0.30%</td>
+              <td>0.75%</td>
+            </tr>
+            <tr>
+              <td>Account Setup Fee</td>
+              <td>$0</td>
+              <td>$0</td>
+              <td>$0</td>
+            </tr>
+            <tr>
+              <td>Transaction Fees</td>
+              <td>None</td>
+              <td>None</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td>Early Withdrawal Fee*</td>
+              <td>None</td>
+              <td>0.50%</td>
+              <td>1.00%</td>
+            </tr>
+            <tr>
+              <td>Account Minimum Fee</td>
+              <td>None</td>
+              <td>None</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td>Account Closing Fee</td>
+              <td>$0</td>
+              <td>$25</td>
+              <td>$50</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <p class="rate-disclaimer">* Early withdrawal fees apply only to withdrawals made within the first 12 months for Savings Plus and 24 months for Managed Stocks.</p>
+      </div>
+      
+      <div class="content-section">
+        <h2 class="section-header">Rate Factors</h2>
+        <p>Several factors can influence the actual rates you receive on your investments:</p>
+        <ul>
+          <li><strong>Market Conditions:</strong> Prevailing economic conditions and market performance significantly impact investment returns.</li>
+          <li><strong>Investment Amount:</strong> Larger investments may qualify for preferential rates in some cases.</li>
+          <li><strong>Investment Duration:</strong> Longer investment periods typically offer better potential for higher returns.</li>
+          <li><strong>Risk Tolerance:</strong> Different risk profiles correspond to different potential return ranges.</li>
+          <li><strong>Asset Allocation:</strong> The mix of assets in your portfolio affects both risk and potential returns.</li>
+        </ul>
+      </div>
+      
+      <div class="content-section">
+        <h2 class="section-header">Rate Updates</h2>
+        <p>Our investment rates are reviewed and updated regularly based on market conditions. We provide several ways to stay informed about current rates:</p>
+        <ul>
+          <li>Visit this page for the most up-to-date information</li>
+          <li>Subscribe to our newsletter for monthly rate updates</li>
+          <li>Follow us on social media for timely announcements</li>
+          <li>Contact our support team for personalized rate information</li>
+        </ul>
+      </div>
+      
+      <div class="call-to-action">
+        <h2>Find Your Ideal Investment Plan</h2>
+        <p>Use our investment calculator to see how different plans can help you reach your financial goals. Our tools provide personalized projections based on your specific financial situation.</p>
+        <div class="cta-buttons">
+          <a href="investment-calculator.html" class="btn">Try Our Calculator</a>
+          <a href="contact.html" class="btn btn-secondary" style="margin-left: 1rem;">Contact an Advisor</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include footer -->
+  <!--#include file="footer-savings.html" -->
+
+  <script src="main.js"></script>
+  <script>
+    // Add table styling
+    document.addEventListener('DOMContentLoaded', function() {
+      const tables = document.querySelectorAll('.rates-table');
+      
+      tables.forEach(table => {
+        table.style.width = '100%';
+        table.style.borderCollapse = 'collapse';
+        table.style.marginBottom = '2rem';
+        table.style.backgroundColor = 'var(--dark)';
+        table.style.borderRadius = '8px';
+        table.style.overflow = 'hidden';
+        table.style.border = '1px solid var(--primary)';
+        
+        const headerCells = table.querySelectorAll('thead th');
+        headerCells.forEach(cell => {
+          cell.style.backgroundColor = 'var(--darker)';
+          cell.style.color = 'var(--primary)';
+          cell.style.padding = '1rem';
+          cell.style.textAlign = 'left';
+          cell.style.fontWeight = '600';
+        });
+        
+        const bodyCells = table.querySelectorAll('tbody td');
+        bodyCells.forEach(cell => {
+          cell.style.padding = '0.8rem 1rem';
+          cell.style.borderTop = '1px solid var(--gray)';
+        });
+        
+        const bodyRows = table.querySelectorAll('tbody tr');
+        bodyRows.forEach(row => {
+          row.addEventListener('mouseover', function() {
+            this.style.backgroundColor = 'var(--gray)';
+          });
+          
+          row.addEventListener('mouseout', function() {
+            this.style.backgroundColor = 'var(--dark)';
+          });
+        });
+      });
+      
+      // Style the plan cards
+      const planCards = document.querySelectorAll('.plan-card');
+      
+      planCards.forEach(card => {
+        const planRate = card.querySelector('.plan-rate');
+        if (planRate) {
+          planRate.style.fontSize = '1.8rem';
+          planRate.style.fontWeight = '700';
+          planRate.style.color = 'var(--primary)';
+          planRate.style.margin = '1rem 0';
+          
+          const span = planRate.querySelector('span');
+          if (span) {
+            span.style.display = 'block';
+            span.style.fontSize = '0.9rem';
+            span.style.fontWeight = '400';
+            span.style.marginTop = '0.3rem';
+            span.style.opacity = '0.8';
+          }
+        }
+      });
+      
+      // Style disclaimers
+      const disclaimers = document.querySelectorAll('.rate-disclaimer');
+      disclaimers.forEach(disclaimer => {
+        disclaimer.style.fontSize = '0.9rem';
+        disclaimer.style.fontStyle = 'italic';
+        disclaimer.style.opacity = '0.8';
+        disclaimer.style.marginTop = '1rem';
+      });
+    });
+  </script>
+</body>
+</html>

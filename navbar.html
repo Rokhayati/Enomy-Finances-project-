@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Navbar with Profile Icon</title>
+  <style>
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0f1016;
+      padding: 10px 20px;
+      color: white;
+      font-family: Arial, sans-serif;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar-left .logo img {
+      height: 40px;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-right a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: 600;
+    }
+
+    .btn {
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-signup {
+      background-color: #e65a00;
+      color: white;
+    }
+
+    .btn-login {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    /* Profile Icon */
+    #profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/847/847969.png'); /* default icon */
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      display: none; /* hidden by default, shown when logged in */
+      border: 2px solid #e65a00;
+      box-shadow: 0 0 5px rgba(230, 90, 0, 0.7);
+      margin-left: 15px;
+      flex-shrink: 0;
+    }
+
+    /* Overlay & Sidebar */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 998;
+    }
+
+    #overlay.active {
+      display: block;
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    #sidebar.open {
+      right: 0;
+    }
+
+    #sidebar .close-sidebar {
+      font-size: 24px;
+      cursor: pointer;
+      text-align: right;
+      display: block;
+    }
+
+    #sidebar h2 {
+      margin-top: 0;
+    }
+
+    #sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 12px 0;
+    }
+
+    #sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Profile Modal */
+    #profile-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      width: 350px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 1100;
+      color: #333;
+    }
+
+    #profile-modal h3 {
+      margin-top: 0;
+    }
+
+    #profile-modal img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+    
+    /* Search icon */
+    .search-icon {
+      position: fixed;
+      top: 15px;
+      right: 160px;
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+      z-index: 1001;
+      padding: 8px;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .search-icon:hover {
+      background-color: #e65a00;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="/" class="logo">
+        <img src="images/Brand.png" alt="Enomy Logo" />
+      </a>
+    </div>
+    <div class="navbar-right">
+      <a href="enomy.html">Home</a>
+      <a href="signup.html" id="signup-link"><button id="signup-btn" class="btn btn-signup">Sign Up</button></a>
+      <a href="login.html" id="login-link"><button id="login-btn" class="btn btn-login">Log In</button></a>
+      <!-- Profile icon -->
+      <div id="profile-icon" title="My Profile"></div>
+      <div id="profile-name" style="color: white; font-size: 12px; margin-top: 5px;"></div>
+    </div>
+  </nav>
+
+  <!-- Overlay -->
+  <div id="overlay" onclick="closeSidebar()"></div>
+
+  <!-- Sidebar Menu -->
+  <div id="sidebar">
+    <span class="close-sidebar" onclick="closeSidebar()">×</span>
+    <h2>📂 Enomy Menu</h2>
+    <a href="CurrencyConversion.html">Currency Converter</a>
+    <a href="basic-savings.html">Basic Savings Plan</a>
+    <a href="savings-plus.html">Savings Plan Plus</a>
+    <a href="managed-stocks.html">Managed Stock Investment</a>
+    <hr />
+    <a href="#" id="my-profile-link">My Profile</a>
+    <a href="#">Settings</a>
+    <a href="#">Change Password</a>
+    <a href="#">Delete Account</a>
+    <a href="/logout" id="logout-btn">Logout</a>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profile-modal">
+    <h3>👤 My Profile</h3>
+    <img
+      id="current-profile-pic"
+      src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+      alt="Profile Picture"
+    />
+    <br /><br />
+    <form id="profile-form" enctype="multipart/form-data" action="/upload-profile-pic" method="POST">
+      <label for="profile-pic">Change Profile Picture:</label><br />
+      <input type="file" id="profile-pic" name="profile-pic" accept="image/*" /><br /><br />
+      <button type="submit">Upload</button>
+      <button type="button" onclick="closeProfileModal()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Search icon -->
+  <div class="search-icon" onclick="window.location.href='finance-news.html';">
+    🔍
+  </div>
+
+  <script>
+    // Profile icon, sidebar, and modal functions
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    }
+    
+    function closeProfileModal() {
+      document.getElementById('profile-modal').style.display = 'none';
+    }
+    
+    // Authentication check - using session data from the server
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all necessary elements
+      const profileIcon = document.getElementById('profile-icon');
+      const profileName = document.getElementById('profile-name');
+      const signupLink = document.getElementById('signup-link');
+      const loginLink = document.getElementById('login-link');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const myProfileLink = document.getElementById('my-profile-link');
+      const profileModal = document.getElementById('profile-modal');
+      
+      // Check Flask session (will be injected by the server)
+      const username = '{{ session.get("user", "") }}'; 
+      const profilePic = '{{ session.get("profilePic", "") }}';
+      
+      if (username) {
+          // User is logged in, show profile icon and hide login/signup buttons
+          if (profileIcon) {
+              profileIcon.style.display = 'block';
+              
+              // Set profile picture if available
+              if (profilePic) {
+                  profileIcon.style.backgroundImage = `url('/uploads/${profilePic}')`;
+              }
+          }
+          
+          // Show username under the profile icon
+          if (profileName) {
+              profileName.textContent = username;
+          }
+          
+          // Hide login and signup buttons
+          if (signupLink) signupLink.style.display = 'none';
+          if (loginLink) loginLink.style.display = 'none';
+      } else {
+          // User is not logged in, hide profile icon and show login/signup buttons
+          if (profileIcon) profileIcon.style.display = 'none';
+          if (profileName) profileName.textContent = '';
+          if (signupLink) signupLink.style.display = 'inline-block';
+          if (loginLink) loginLink.style.display = 'inline-block';
+      }
+      
+      // Profile icon click event - open sidebar
+      if (profileIcon) {
+          profileIcon.addEventListener('click', function() {
+              sidebar.classList.add('open');
+              overlay.classList.add('active');
+          });
+      }
+      
+      // Profile modal events
+      if (myProfileLink) {
+          myProfileLink.addEventListener('click', function(e) {
+              e.preventDefault();
+              profileModal.style.display = 'block';
+              closeSidebar();
+          });
+      }
+      
+      // Profile form submission
+      const profileForm = document.getElementById('profile-form');
+      if (profileForm) {
+          profileForm.addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              const fileInput = document.getElementById('profile-pic');
+              const file = fileInput.files[0];
+              
+              if (file) {
+                  const formData = new FormData();
+                  formData.append('profile-pic', file);
+                  
+                  fetch('/upload-profile-pic', {
+                      method: 'POST',
+                      body: formData
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          // Update profile picture
+                          const newImageUrl = data.imageUrl;
+                          document.getElementById('current-profile-pic').src = newImageUrl;
+                          profileIcon.style.backgroundImage = `url('${newImageUrl}')`;
+                          
+                          closeProfileModal();
+                          alert('Profile picture updated successfully!');
+                      } else {
+                          alert(data.message || 'Failed to update profile picture');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                      alert('An error occurred while uploading your profile picture');
+                  });
+              } else {
+                  alert('Please select an image first');
+              }
+          });
+      }
+    });
+  </script>
+</body>
+</html>

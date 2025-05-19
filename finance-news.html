@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Finance News</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      background-image: url('images/gradient.png');
+    }
+
+    .search-container {
+      margin: 30px auto;
+      max-width: 600px;
+      padding: 10px;
+      background: white;
+      box-shadow: 0 0 10px rgba(12, 12, 12, 0.1);
+      border-radius: 10px;
+    }
+
+    .search-container input[type="text"] {
+      width: 95%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ff6a00;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .news-section {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .news-article {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .news-article:last-child {
+      border-bottom: none;
+    }
+
+    .news-article h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #ff6a00;
+    }
+
+    .news-article p {
+      font-size: 0.95rem;
+      color: #353b48;
+    }
+
+    .news-article a {
+      color: #0097e6;
+      text-decoration: none;
+    }
+
+    .news-article a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="search-container">
+    <input type="text" id="search-bar" placeholder="Look for what is new" onfocus="this.placeholder = ''" onblur="if (!this.value) { this.placeholder = 'Look for what is new'; }">
+  </div>
+
+  <div class="news-section" id="news-container">
+    Loading news...
+  </div>
+
+  <script>
+    const apiKey = "36d86e487d0d47dd9c6ef81fa358b186"; // ✅ Your key here
+    const url = `https://newsapi.org/v2/top-headlines?category=business&language=en&pageSize=6&apiKey=${apiKey}`;
+
+    // Fetch and display the news
+    function fetchNews(query = '') {
+      const newsUrl = query ? 
+        `https://newsapi.org/v2/everything?q=${query}&category=business&language=en&pageSize=6&apiKey=${apiKey}` :
+        url;
+
+      fetch(newsUrl)
+        .then(response => response.json())
+        .then(data => {
+          const newsContainer = document.getElementById("news-container");
+          newsContainer.innerHTML = "";  // Clear existing news
+
+          if (data.articles && data.articles.length > 0) {
+            data.articles.forEach(article => {
+              const articleDiv = document.createElement("div");
+              articleDiv.className = "news-article";
+              articleDiv.innerHTML = `
+                <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+                <p>${article.description || "No description available."}</p>
+              `;
+              newsContainer.appendChild(articleDiv);
+            });
+          } else {
+            newsContainer.innerHTML = "No news available.";
+          }
+        })
+        .catch(error => {
+          document.getElementById("news-container").innerHTML = "Failed to load news.";
+          console.error("Error fetching news:", error);
+        });
+    }
+
+    // Load initial news
+    fetchNews();
+
+    // Add event listener to search bar
+    document.getElementById("search-bar").addEventListener("input", function() {
+      const query = this.value.trim();
+      fetchNews(query);
+    });
+  </script>
+
+</body>
+</html>

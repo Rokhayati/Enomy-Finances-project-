@@ -1,0 +1,69 @@
+{
+    "bank_name": "Enomy-Finances Limited (EFL)",
+    "sector": "Financial Services – Mortgages, Savings, and Investments",
+    "about_bank": "Enomy-Finances Limited (EFL) is a modern financial advisory organization offering personalized services to individuals seeking guidance on budgeting, savings, and investment opportunities. EFL helps clients manage their finances through customized investment plans, currency conversion tools, and portfolio management. It aims to empower users with clarity and control over their finances through a secure, accessible, and user-friendly digital platform. The current plans or Investments offered by the bank are: Basic Savings Plan, Savings Plan Plus, and Managed Stock Investments.",
+    "currencies_supported": [
+      "GBP", "USD", "EUR", "BRL", "JPY", "TRY", "XAF"
+    ],
+    "conversion_limits": {
+      "minimum": 300,
+      "maximum": 5000
+    },
+    "conversion_fees": [
+      {"amount_range": "<=500", "fee_percent": 3.5},
+      {"amount_range": ">500", "fee_percent": 2.5},
+      {"amount_range": ">1500", "fee_percent": 2.0},
+      {"amount_range": ">2500", "fee_percent": 1.5}
+    ],
+    "investment_options": [
+      {
+        "name": "Basic Savings Plan",
+        "max_yearly": 20000,
+        "min_monthly": 50,
+        "min_lump_sum": 0,
+        "annual_return_range": [1.2, 2.4],
+        "tax_percent": 0,
+        "monthly_fee_percent": 0.25,
+        "description": "An entry-level investment plan with low monthly contributions, tax-free profits, and modest annual returns. Ideal for beginners or conservative savers."
+      },
+      {
+        "name": "Savings Plan Plus",
+        "max_yearly": 30000,
+        "min_monthly": 50,
+        "min_lump_sum": 300,
+        "annual_return_range": [3.0, 5.5],
+        "tax_policy": "10% on profits above £12,000",
+        "monthly_fee_percent": 0.3,
+        "description": "A medium-tier savings plan offering higher returns and moderate taxation. Designed for users ready to invest slightly more for better long-term benefits."
+      },
+      {
+        "name": "Managed Stock Investments",
+        "max_yearly": "Unlimited",
+        "min_monthly": 150,
+        "min_lump_sum": 1000,
+        "annual_return_range": [4.0, 23.0],
+        "tax_policy": "10% on profits above £12,000; 20% on profits above £40,000",
+        "monthly_fee_percent": 1.3,
+        "description": "A high-risk, high-reward plan involving professional stock management with wide return variability. Suitable for seasoned investors seeking strong portfolio growth."
+      }
+    ],
+    "quote_fields": [
+      "min_return_1_year",
+      "max_return_1_year",
+      "min_return_5_years",
+      "max_return_5_years",
+      "min_return_10_years",
+      "max_return_10_years",
+      "total_profit",
+      "total_fees_paid",
+      "total_taxes_paid"
+    ],
+    "system_requirements": {
+      "input_format": "currency (2 decimal places)",
+      "error_handling": "user input and system failures handled gracefully",
+      "network_failure": "log errors locally",
+      "data_security": "immediate data caching on crash",
+      "interface": "simple, intuitive, supports text, numbers, and graphs"
+    }
+  }
+  

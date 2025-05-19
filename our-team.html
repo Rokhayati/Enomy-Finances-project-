@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Team - Enomy Finance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f1016;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-left img {
+            height: 40px;
+        }
+        
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        
+        .navbar-right a:hover {
+            color: #ff6a00;
+        }
+        
+        .hero {
+            margin-top: 80px;
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #0f1016;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 span {
+            color: #ff6a00;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .team-section {
+            margin-bottom: 80px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #0f1016;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #ff6a00;
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 20px auto 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 25px;
+        }
+        
+        .member-info h3 {
+            font-size: 1.5rem;
+            color: #0f1016;
+            margin-bottom: 5px;
+        }
+        
+        .member-info .position {
+            color: #ff6a00;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .member-info .bio {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: #0f1016;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #ff6a00;
+        }
+        
+        .culture-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .culture-item {
+            text-align: center;
+        }
+        
+        .culture-icon {
+            font-size: 2.5rem;
+            color: #ff6a00;
+            margin-bottom: 20px;
+        }
+        
+        .culture-item h3 {
+            font-size: 1.3rem;
+            color: #0f1016;
+            margin-bottom: 15px;
+        }
+        
+        .join-team {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 60px 30px;
+            border-radius: 10px;
+        }
+        
+        .join-team h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .join-team p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #ff6a00;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #e65a00;
+            transform: translateY(-5px);
+        }
+        
+        .footer {
+            background-color: #0f1016;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 80px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #ff6a00;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .team-grid, .culture-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .culture-section {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="enomy.html">
+                <img src="images/Brand.png" alt="Enomy Logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            <a href="enomy.html">Home</a>
+            <a href="our-story.html">Our Story</a>
+            <a href="our-mission.html">Our Mission</a>
+            <a href="our-team.html">Our Team</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+    
+    <div class="hero">
+        <h1>Meet Our <span>Team</span></h1>
+        <p>The passionate individuals behind Enomy, dedicated to transforming how people interact with their finances.</p>
+    </div>
+    
+    <div class="content">
+        <div class="team-section">
+            <div class="section-header">
+                <h2>Leadership Team</h2>
+                <p>Our leadership team combines decades of expertise across finance, technology, and user experience design to guide Enomy's mission and growth.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="James Wilson" class="member-image">
+                    <div class="member-info">
+                        <h3>James Wilson</h3>
+                        <div class="position">CEO & Co-Founder</div>
+                        <p class="bio">With 15 years of experience in investment banking and a passion for financial education, James leads Enomy's strategic vision and operations.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Sarah Chen" class="member-image">
+                    <div class="member-info">
+                        <h3>Sarah Chen</h3>
+                        <div class="position">CTO & Co-Founder</div>
+                        <p class="bio">A technology innovator with previous roles at Google and fintech startups, Sarah leads Enomy's technical development and data security efforts.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Michael Rodriguez" class="member-image">
+                    <div class="member-info">
+                        <h3>Michael Rodriguez</h3>
+                        <div class="position">COO & Co-Founder</div>
+                        <p class="bio">Michael's background in behavioral economics and user experience design helps ensure Enomy's products are not just powerful, but intuitive and accessible to all.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-medium"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="team-section">
+            <div class="section-header">
+                <h2>Product & Engineering</h2>
+                <p>The brilliant minds who build and refine our platform, constantly pushing the boundaries of what's possible in financial technology.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1061&q=80" alt="Aisha Patel" class="member-image">
+                    <div class="member-info">
+                        <h3>Aisha Patel</h3>
+                        <div class="position">VP of Product</div>
+                        <p class="bio">Aisha leads our product strategy, drawing on her experience at top fintech companies to create tools that truly address user needs.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1600878459138-e1123b37cb30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="David Kim" class="member-image">
+                    <div class="member-info">
+                        <h3>David Kim</h3>
+                        <div class="position">Lead Developer</div>
+                        <p class="bio">David oversees our engineering team, bringing over a decade of experience in building secure, scalable financial applications.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Elena Martinez" class="member-image">
+                    <div class="member-info">
+                        <h3>Elena Martinez</h3>
+                        <div class="position">UX/UI Design Lead</div>
+                        <p class="bio">Elena ensures our platform is intuitive and accessible, crafting user experiences that make complex financial tasks feel simple and natural.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-dribbble"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="team-section">
+            <div class="section-header">
+                <h2>Finance & Education</h2>
+                <p>Our experts in finance and education who ensure our content and tools are accurate, insightful, and genuinely helpful.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1776&q=80" alt="Robert Taylor" class="member-image">
+                    <div class="member-info">
+                        <h3>Robert Taylor</h3>
+                        <div class="position">Chief Financial Analyst</div>
+                        <p class="bio">A former Wall Street analyst with an MBA from Wharton, Robert leads our financial analysis and investment strategy research.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1618077360395-f3068be8e001?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80" alt="Sophia Johnson" class="member-image">
+                    <div class="member-info">
+                        <h3>Sophia Johnson</h3>
+                        <div class="position">Head of Financial Education</div>
+                        <p class="bio">With a Ph.D. in economics and experience teaching at leading universities, Sophia develops our educational content and tutorials.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-medium"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Marcus Lee" class="member-image">
+                    <div class="member-info">
+                        <h3>Marcus Lee</h3>
+                        <div class="position">Investment Strategist</div>
+                        <p class="bio">A Certified Financial Planner with 12 years of experience, Marcus helps develop and validate our investment planning tools and calculators.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="culture-section">
+            <div class="section-header">
+                <h2>Our Culture</h2>
+                <p>At Enomy, our culture is the foundation of everything we do. We've built an environment where innovation thrives, diversity is celebrated, and everyone is empowered to make an impact.</p>
+            </div>
+            
+            <div class="culture-grid">
+                <div class="culture-item">
+                    <div class="culture-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>We encourage creative thinking and embrace new ideas, constantly pushing the boundaries of what's possible.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="culture-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Collaboration</h3>
+                    <p>We believe the best solutions come from diverse perspectives working together toward common goals.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="culture-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Integrity</h3>
+                    <p>We hold ourselves to the highest ethical standards in all our work and relationships.</p>
+                </div>
+                
+                <div class="culture-item">
+                    <div class="culture-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Impact-Driven</h3>
+                    <p>We focus on creating real, measurable positive change in our users' financial lives.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="join-team">
+            <h2>Join Our Team</h2>
+            <p>We're always looking for passionate, talented individuals to help us advance our mission. If you're excited about transforming how people interact with their finances, we'd love to hear from you.</p>
+            <a href="careers.html" class="cta-button">View Open Positions</a>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 Enomy Finance. All Rights Reserved.</p>
+        <p><a href="enomy.html">Home</a> | <a href="privacy-policy.html">Privacy Policy</a> | <a href="terms-of-service.html">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

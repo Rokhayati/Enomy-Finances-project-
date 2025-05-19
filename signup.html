@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    body {
+      background-color: #0c121e;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px;
+    }
+  
+    .signup-wrapper {
+      display: flex;
+      flex-direction: row;
+      background-color: #0f101b;
+      border-radius: 16px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 1000px;
+      height: 650px;
+      box-shadow: 0 0 30px rgba(231, 225, 232, 0.2);
+    }
+  
+    .animation-section {
+      flex: 1;
+      background-color: #d6d8e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+    }
+  
+    .form-section {
+      flex: 4;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: #0c0d15;
+    }
+  
+    h2 {
+      color: #ff6f00;
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+  
+    .progress-bar {
+      height: 6px;
+      background-color: #ff6f00;
+      width: 15%;
+      transition: width 0.3s ease;
+      margin-bottom: 25px;
+      border-radius: 4px;
+    }
+  
+    .step {
+      display: none;
+      animation: fade 0.5s ease-in-out;
+    }
+  
+    .step.active {
+      display: block;
+    }
+  
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #ccc;
+      font-weight: 500;
+    }
+  
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 6px;
+      background-color: #1c2340;
+      color: white;
+      font-size: 14px;
+    }
+  
+    .explanation {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 4px;
+    }
+  
+    .btn {
+      background-color: #ff6f00;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      margin-top: 30px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      transition: background-color 0.3s;
+    }
+  
+    .btn:hover {
+      background-color: #e65c00;
+    }
+  
+    .link-text {
+      text-align: center;
+      margin-top: 35px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  
+    .link-text a {
+      color: #ff6f00;
+      text-decoration: none;
+    }
+  
+    .link-text a:hover {
+      text-decoration: underline;
+    }
+  
+    @media (max-width: 768px) {
+      .signup-wrapper {
+        flex-direction: column;
+        height: auto;
+      }
+  
+      .animation-section {
+        order: 2;
+        padding: 20px;
+      }
+  
+      .form-section {
+        order: 1;
+        padding: 30px;
+      }
+  
+      h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="signup-wrapper">
+    <div class="animation-section">
+      <dotlottie-player 
+      id="carAnimation"
+      src="https://lottie.host/f1d61734-24be-41ef-8c81-2742dcd03c72/7FZwDjsL2u.lottie"
+      background="transparent"
+      speed="0.5"
+      style="width: 500px; height: 500px"
+      loop>
+    </dotlottie-player>    
+    </div>
+    <div class="form-section">
+      <h2>Drive your future — start typing.</h2>
+      <div class="progress-bar" id="progressBar"></div>
+      <form id="signupForm" action="/signup" method="post">
+        <!-- Step 1 -->
+        <div class="step active" id="step1">
+          <label for="firstname">First Name</label>
+          <input type="text" name="firstname" required>
+          <div class="explanation">We use your legal first name to verify your identity.</div>
+
+          <label for="lastname">Last Name</label>
+          <input type="text" name="lastname" required>
+          <div class="explanation">Your last name helps us match your records accurately.</div>
+
+          <label for="username">Username</label>
+          <input type="text" name="username" required>
+          <div class="explanation">Choose a unique username for your account login.</div>
+
+          <button type="button" class="btn" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step" id="step2">
+          <label for="email">Email</label>
+          <input type="email" name="email" required>
+          <div class="explanation">We'll send account updates and verification links here.</div>
+
+          <label for="dob">Date of Birth</label>
+          <input type="date" name="dob" required>
+          <div class="explanation">Your birth date helps us comply with age-related regulations.</div>
+
+          <label for="nationality">Nationality</label>
+          <input type="text" name="nationality" required>
+          <div class="explanation">We need this for regulatory and compliance purposes.</div>
+
+          <button type="button" class="btn" onclick="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step" id="step3">
+          <label for="country">Country</label>
+          <select name="country" required onchange="loadCities(this.value)">
+            <option value="">-- Select Country --</option>
+            <option value="Senegal">Senegal</option>
+            <option value="UAE">UAE</option>
+            <option value="France">France</option>
+          </select>
+          <div class="explanation">Your country determines available services and compliance requirements.</div>
+
+          <label for="city">City</label>
+          <select name="city" required id="cityDropdown">
+            <option value="">-- Select City --</option>
+          </select>
+          <div class="explanation">We use your city to personalize your experience.</div>
+
+          <label for="phone">Phone Number</label>
+          <input type="text" name="phone" required>
+          <div class="explanation">Your phone number helps us secure your account and provide support.</div>
+
+          <label for="password">Password</label>
+          <input type="password" name="password" required>
+          <div class="explanation">Choose a strong password to protect your account.</div>
+
+          <input type="submit" class="btn" value="Sign Up">
+        </div>
+      </form>
+
+      <p class="link-text">Already registered? <a href="login.html">Click here to log in</a></p>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 3;
+  
+    function updateProgressBar() {
+      const progressBar = document.getElementById('progressBar');
+      const progress = ((currentStep - 1) / totalSteps) * 100;
+      progressBar.style.width = progress + '%';
+    }
+  
+    function nextStep() {
+      const current = document.getElementById('step' + currentStep);
+      const inputs = current.querySelectorAll('input, select');
+      let isValid = true;
+  
+      inputs.forEach(input => {
+        if (!input.checkValidity()) {
+          input.reportValidity(); // Triggers browser's validation message
+          isValid = false;
+          return; // Exit early if one field is invalid
+        }
+      });
+  
+      if (!isValid) return;
+  
+      current.classList.remove('active');
+      currentStep++;
+      if (currentStep <= totalSteps) {
+        const next = document.getElementById('step' + currentStep);
+        if (next) {
+          next.classList.add('active');
+        }
+        updateProgressBar();
+      }
+    }
+  
+    function loadCities(country) {
+      const cityDropdown = document.getElementById('cityDropdown');
+      cityDropdown.innerHTML = '<option value="">-- Select City --</option>';
+  
+      const cities = {
+        'Armenia': ['Yerevan', 'Gyumri', 'Ijevan'],
+        'Brasil': ['Sao Paolo', 'Rio de Janeiro', 'Salvador'],
+        'France': ['Paris', 'Lyon', 'Marseille'],
+        'Germany': ['Berlin', 'Munich', 'Hamburg'],
+        'Japan': ['Tokyo', 'Yokohama', 'Osaka','Kyoto'],
+        'Senegal': ['Dakar', 'Thies', 'Saint-Louis'],
+        'United Arab Emirates': ['Dubai', 'Abu Dhabi', 'Sharjah'],
+        'United States of America': ['New York', 'Los Angeles', 'Chicago']
+      };
+  
+      if (cities[country]) {
+        cities[country].forEach(city => {
+          const opt = document.createElement('option');
+          opt.value = city;
+          opt.innerText = city;
+          cityDropdown.appendChild(opt);
+        });
+      }
+    }
+  
+    const carAnimation = document.getElementById('carAnimation');
+    const inputs = document.querySelectorAll('#signupForm input');
+    
+    let typingTimer;
+    let lastKeypressTime = null;
+    const doneTypingInterval = 2000; // 2 seconds
+    
+    let isReversing = false;
+    let originalSpeed = 0.5; // Base speed
+    let fadeTimer;
+  
+    // Ensure car is stopped and visible at start
+    carAnimation.addEventListener('ready', () => {
+      carAnimation.pause();
+      carAnimation.style.opacity = '1';
+      carAnimation.setSpeed(originalSpeed);
+    });
+  
+    function startCar(speed = originalSpeed) {
+      if (isReversing) {
+        carAnimation.setSpeed(originalSpeed);
+        isReversing = false;
+      }
+      carAnimation.setSpeed(speed);
+      carAnimation.play();
+      carAnimation.style.opacity = '1';
+    }
+  
+    function reverseCar() {
+      isReversing = true;
+      carAnimation.setSpeed(-0.2); // Reverse slowly
+      carAnimation.play();
+      carAnimation.style.opacity = '0.6'; // Slightly faded
+    }
+  
+    function stopCar() {
+      carAnimation.pause();
+      carAnimation.style.opacity = '0.7'; // Fade when idle
+    }
+  
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        const now = Date.now();
+  
+        if (lastKeypressTime) {
+          const typingSpeed = Math.min(1.5, 600 / (now - lastKeypressTime)); // Cap speed
+          startCar(typingSpeed);
+        } else {
+          startCar(originalSpeed);
+        }
+  
+        lastKeypressTime = now;
+  
+        clearTimeout(typingTimer);
+        clearTimeout(fadeTimer);
+  
+        typingTimer = setTimeout(() => {
+          reverseCar();
+          fadeTimer = setTimeout(stopCar, 4000); // Fully stop after reverse
+        }, doneTypingInterval);
+      });
+    });
+  
+    // Initialize progress bar
+    updateProgressBar();
+  
+    // Submit handler
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      e.preventDefault();  // Prevent form submission to handle it via JavaScript
+  
+      // You can also perform any AJAX calls here if needed to send data to the server
+      // Example (using fetch):
+      // fetch('/signup', {
+      //   method: 'POST',
+      //   body: new FormData(this),
+      // })
+      // .then(response => response.json())
+      // .then(data => {
+      //   // Handle response and redirect to loading page
+      // });
+  
+      // Redirect to loading page
+      window.location.href = 'loading.html?source=signup';
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logging Out - Enomy</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #0c121e, #161620);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+      color: white;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 20px 0;
+      animation: fadeIn 1.5s ease-in-out;
+      color: #ff6a00;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .spinner {
+      width: 80px;
+      height: 80px;
+      border: 8px solid rgba(255, 106, 0, 0.3);
+      border-radius: 50%;
+      border-top: 8px solid #ff6a00;
+      animation: spin 1s linear infinite;
+      margin-bottom: 30px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .btn {
+      background-color: #ff6a00;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+      font-weight: 600;
+    }
+    
+    .btn:hover {
+      background-color: #e65a00;
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner"></div>
+  <h1>Logging You Out...</h1>
+  <p>We're securely ending your session. Thank you for using Enomy Finance today!</p>
+
+  <script>
+    // Clear session storage
+    sessionStorage.clear();
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('profilePic');
+    
+    // Redirect to home page after 3 seconds
+    setTimeout(function() {
+      window.location.href = 'enomy.html';
+    }, 3000);
+  </script>
+</body>
+</html>

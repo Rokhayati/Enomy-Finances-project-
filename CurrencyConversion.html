@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currency Converter - Enomy Finance</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body, html {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+      background-color: #0f111e;
+      background-image: url('images/gradient.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-blend-mode: overlay;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0f1016;
+      padding: 10px 20px;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-left .logo img {
+      height: 40px;
+    }
+    
+    .navbar-center {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-center a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      font-size: 15px;
+      position: relative;
+      transition: color 0.3s;
+    }
+    
+    .navbar-center a:hover {
+      color: #ff6a00;
+    }
+    
+    .navbar-center a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #ff6a00;
+      transition: width 0.3s;
+    }
+    
+    .navbar-center a:hover::after {
+      width: 100%;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-right a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: 600;
+    }
+
+    .btn {
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-signup {
+      background-color: #e65a00;
+      color: white;
+    }
+
+    .btn-login {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    #profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/847/847969.png');
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      display: none; 
+      border: 2px solid #e65a00;
+      box-shadow: 0 0 5px rgba(230, 90, 0, 0.7);
+      margin-left: 15px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    #profile-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 8px rgba(230, 90, 0, 0.9);
+    }
+    
+    .page-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 20px 40px;
+    }
+    
+    .page-header {
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ff6a00, #e65a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(255, 106, 0, 0.2);
+    }
+    
+    .page-header p {
+      font-size: 1.1rem;
+      color: #ccc;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: rgba(24, 31, 44, 0.85);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(255, 153, 51, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 106, 0, 0.2);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #ff6a00, #e65a00);
+      color: white;
+      padding: 20px 25px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .card-header i {
+      font-size: 1.5rem;
+    }
+
+    .card-body {
+      padding: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #ff6a00;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 1em;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      outline: none;
+      box-shadow: 0 0 8px rgba(255, 106, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      box-shadow: 0 0 15px rgba(255, 106, 0, 0.3);
+    }
+
+    button {
+      padding: 14px;
+      width: 100%;
+      background: linear-gradient(135deg, #ff6a00, #e65a00);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 106, 0, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(255, 106, 0, 0.4);
+    }
+
+    #result {
+      font-size: 1.2em;
+      white-space: pre-line;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      color: #fff;
+      line-height: 1.7;
+    }
+    
+    .result-amount {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin: 15px 0;
+      color: #ff6a00;
+      text-shadow: 0 0 10px rgba(255, 106, 0, 0.4);
+    }
+    
+    .result-fee {
+      font-size: 1rem;
+      color: #aaa;
+      margin-bottom: 15px;
+    }
+    
+    .result-disclaimer {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 15px;
+      font-style: italic;
+    }
+
+    .chart-container {
+      background: rgba(24, 31, 44, 0.85);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 40px auto;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(255, 153, 51, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      max-width: 900px; /* Control the overall container width */
+    }
+    
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .chart-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff6a00;
+    }
+    
+    .chart-filters {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .chart-filter {
+      padding: 8px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .chart-filter.active {
+      background: linear-gradient(135deg, #ff6a00, #e65a00);
+      font-weight: bold;
+    }
+    
+    /* Chart wrapper for better size control */
+    .chart-wrapper {
+      width: 100%;
+      height: 300px; /* Keep reasonable height */
+      max-height: 50vh; /* Limit maximum height based on viewport */
+      position: relative;
+      margin: 0 auto;
+    }
+    
+    canvas {
+      width: 100%;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .country-table {
+      background: rgba(24, 31, 44, 0.85);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 30px rgba(255, 153, 51, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin: 40px 0;
+    }
+    
+    .table-header {
+      background: linear-gradient(135deg, #ff6a00, #e65a00);
+      color: white;
+      padding: 20px 25px;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #ff6a00;
+      font-weight: bold;
+    }
+    
+    td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .flag-img {
+      height: 30px;
+      border-radius: 4px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    
+    .rate-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      background: rgba(255, 106, 0, 0.2);
+      color: #ff6a00;
+    }
+    
+    .rate-value {
+      color: #ff6a00;
+      font-weight: bold;
+    }
+    
+    .footer {
+      background-color: #0f1016;
+      padding: 20px;
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+    
+    .footer a {
+      color: #ff6a00;
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Loader */
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 106, 0, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #ff6a00;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Historical rates chart controls */
+    .historical-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .period-selector {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .period-btn {
+      padding: 8px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .period-btn.active {
+      background: linear-gradient(135deg, #ff6a00, #e65a00);
+      font-weight: bold;
+    }
+    
+    @media (max-width: 768px) {
+      .navbar-center {
+        display: none;
+      }
+      
+      .page-header h1 {
+        font-size: 2.3rem;
+      }
+      
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .chart-filters {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+      
+      /* Adjust chart size further on mobile */
+      .chart-wrapper {
+        height: 250px;
+      }
+      
+      .historical-controls {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="#" class="logo">
+        <span style="color: #ff6a00; font-weight: bold; font-size: 24px;">Enomy</span>
+        <span style="font-weight: 300; font-size: 24px;">Finance</span>
+      </a>
+    </div>
+    <div class="navbar-center">
+      <a href="#">Home</a>
+      <a href="#">Convert</a>
+      <a href="#">Send Money</a>
+      <a href="#">Rates</a>
+      <a href="#">Business</a>
+    </div>
+    <div class="navbar-right">
+      <a href="#" class="btn btn-login">Log In</a>
+      <a href="#" class="btn btn-signup">Sign Up</a>
+      <div id="profile-icon"></div>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <div class="page-header">
+      <h1>Currency Converter</h1>
+      <p>Get real-time exchange rates and convert currencies with our simple, reliable, and secure currency converter.</p>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <span>Convert Currency</span>
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="card-body">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" placeholder="Enter amount" value="1000">
+          
+          <label for="from-currency">From</label>
+          <select id="from-currency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+          </select>
+          
+          <label for="to-currency">To</label>
+          <select id="to-currency">
+            <option value="EUR">EUR - Euro</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+          </select>
+          
+          <button id="convert-btn">Convert Now</button>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <span>Conversion Result</span>
+          <i class="fas fa-calculator"></i>
+        </div>
+        <div class="card-body">
+          <div id="loader" class="loader">
+            <div class="loader-spinner"></div>
+            <p>Converting your currency...</p>
+          </div>
+          
+          <div id="result">
+            <div class="result-info">
+              <p>1000 USD equals</p>
+              <div class="result-amount">920.50 EUR</div>
+              <div class="result-fee">Fee: 2.50 USD (0.25%)</div>
+              <p>1 USD = 0.9205 EUR</p>
+              <p>1 EUR = 1.0864 USD</p>
+            </div>
+            <div class="result-disclaimer">
+              Exchange rates are updated every hour. Last update: 2023-11-06 14:30 UTC
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-container">
+      <div class="chart-header">
+        <div class="chart-title">USD to EUR - 30 Day History</div>
+        <div class="chart-filters">
+          <button class="chart-filter active" data-period="7d">7D</button>
+          <button class="chart-filter" data-period="1m">1M</button>
+          <button class="chart-filter" data-period="3m">3M</button>
+          <button class="chart-filter" data-period="6m">6M</button>
+          <button class="chart-filter" data-period="1y">1Y</button>
+        </div>
+      </div>
+      
+      <div class="chart-wrapper">
+        <canvas id="rateChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="country-table">
+      <div class="table-header">
+        Popular Currency Exchange Rates
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Currency</th>
+            <th>Rate to USD</th>
+            <th>Change (24h)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="https://flagcdn.com/w40/eu.png" alt="EU Flag" class="flag-img">EUR - Euro</td>
+            <td class="rate-value">0.9205</td>
+            <td><span class="rate-badge">+0.15%</span></td>
+          </tr>
+          <tr>
+            <td><img src="https://flagcdn.com/w40/gb.png" alt="GB Flag" class="flag-img">GBP - British Pound</td>
+            <td class="rate-value">0.7830</td>
+            <td><span class="rate-badge">-0.22%</span></td>
+          </tr>
+          <tr>
+            <td><img src="https://flagcdn.com/w40/jp.png" alt="JP Flag" class="flag-img">JPY - Japanese Yen</td>
+            <td class="rate-value">149.32</td>
+            <td><span class="rate-badge">+0.41%</span></td>
+          </tr>
+          <tr>
+            <td><img src="https://flagcdn.com/w40/au.png" alt="AU Flag" class="flag-img">AUD - Australian Dollar</td>
+            <td class="rate-value">1.5420</td>
+            <td><span class="rate-badge">-0.08%</span></td>
+          </tr>
+          <tr>
+            <td><img src="https://flagcdn.com/w40/ca.png" alt="CA Flag" class="flag-img">CAD - Canadian Dollar</td>
+            <td class="rate-value">1.3750</td>
+            <td><span class="rate-badge">+0.12%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2023 Enomy Finance. All rights reserved. | <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sample historical data (in a real app, this would come from an API)
+      const historicalRates = {
+        '7d': [0.9205, 0.9220, 0.9180, 0.9190, 0.9175, 0.9210, 0.9205],
+        '1m': [0.9205, 0.9220, 0.9180, 0.9190, 0.9175, 0.9210, 0.9205, 0.9215, 0.9225, 0.9230, 
+              0.9190, 0.9180, 0.9210, 0.9230, 0.9240, 0.9200, 0.9180, 0.9190, 0.9205, 0.9215, 
+              0.9220, 0.9210, 0.9180, 0.9170, 0.9190, 0.9210, 0.9230, 0.9220, 0.9205, 0.9215],
+        '3m': [], // Would contain 3 months of data
+        '6m': [], // Would contain 6 months of data
+        '1y': []  // Would contain 1 year of data
+      };
+      
+      // For this demo, we'll generate some data for other time periods
+      const generateData = (length, baseValue) => {
+        const result = [];
+        for (let i = 0; i < length; i++) {
+          // Random fluctuation between -0.5% and +0.5%
+          const fluctuation = (Math.random() - 0.5) * 0.01;
+          result.push(baseValue * (1 + fluctuation));
+        }
+        return result;
+      };
+      
+      historicalRates['3m'] = generateData(90, 0.92);
+      historicalRates['6m'] = generateData(180, 0.92);
+      historicalRates['1y'] = generateData(365, 0.92);
+      
+      // Generate labels (dates) for the chart
+      const generateLabels = (days) => {
+        const labels = [];
+        const today = new Date();
+        
+        for (let i = days - 1; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(today.getDate() - i);
+          labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+        }
+        
+        return labels;
+      };
+      
+      // Set up Chart.js
+      const ctx = document.getElementById('rateChart').getContext('2d');
+      let currentPeriod = '7d';
+      
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: generateLabels(7),
+          datasets: [{
+            label: 'USD to EUR',
+            data: historicalRates['7d'],
+            fill: true,
+            backgroundColor: 'rgba(255, 106, 0, 0.1)',
+            borderColor: '#ff6a00',
+            borderWidth: 2,
+            pointBackgroundColor: '#e65a00',
+            pointBorderColor: '#fff',
+            pointRadius: 4,
+            tension: 0.3
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(24, 31, 44, 0.85)',
+              titleColor: '#ff6a00',
+              bodyColor: '#fff',
+              borderColor: 'rgba(255, 106, 0, 0.3)',
+              borderWidth: 1,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  return `Rate: ${context.raw.toFixed(4)}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                color: '#888',
+                maxRotation: 0,
+                autoSkip: true,
+                maxTicksLimit: 7
+              }
+            },
+            y: {
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)'
+              },
+              ticks: {
+                color: '#888',
+                callback: function(value) {
+                  return value.toFixed(3);
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Handle filter buttons for the chart
+      document.querySelectorAll('.chart-filter').forEach(button => {
+        button.addEventListener('click', () => {
+          const period = button.getAttribute('data-period');
+          
+          // Skip if it's the same period
+          if (period === currentPeriod) return;
+          
+          // Update active button
+          document.querySelector('.chart-filter.active').classList.remove('active');
+          button.classList.add('active');
+          
+          // Update chart data
+          const days = period === '7d' ? 7 : 
+                       period === '1m' ? 30 : 
+                       period === '3m' ? 90 : 
+                       period === '6m' ? 180 : 365;
+                       
+          chart.data.labels = generateLabels(days);
+          chart.data.datasets[0].data = historicalRates[period];
+          chart.update();
+          
+          // Update title
+          document.querySelector('.chart-title').textContent = `USD to EUR - ${
+            period === '7d' ? '7 Day' : 
+            period === '1m' ? '30 Day' : 
+            period === '3m' ? '3 Month' : 
+            period === '6m' ? '6 Month' : '1 Year'
+          } History`;
+          
+          currentPeriod = period;
+        });
+      });
+      
+      // Handle conversion
+      document.getElementById('convert-btn').addEventListener('click', function() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        const fromCurrency = document.getElementById('from-currency').value;
+        const toCurrency = document.getElementById('to-currency').value;
+        
+        // Show loader
+        document.getElementById('loader').style.display = 'block';
+        document.getElementById('result').style.display = 'none';
+        
+        // In a real app, you would make an API call here
+        // For demo purposes, we'll use a simple calculation
+        setTimeout(() => {
+          // Sample rates for demo
+          const rates = {
+            'USD': 1,
+            'EUR': 0.9205,
+            'GBP': 0.7830,
+            'JPY': 149.32,
+            'AUD': 1.5420,
+            'CAD': 1.3750,
+            'CHF': 0.8940,
+            'CNY': 7.2861,
+            'INR': 83.2713,
+            'SGD': 1.3531
+          };
+          
+          // Calculate conversion
+          const baseAmount = amount / rates[fromCurrency];
+          const convertedAmount = baseAmount * rates[toCurrency];
+          
+          // Calculate fee (0.25%)
+          const fee = amount * 0.0025;
+          const feeInFromCurrency = fee.toFixed(2);
+          
+          // Update result
+          const resultElement = document.getElementById('result');
+          const resultInfo = resultElement.querySelector('.result-info');
+          
+          resultInfo.innerHTML = `
+            <p>${amount} ${fromCurrency} equals</p>
+            <div class="result-amount">${convertedAmount.toFixed(2)} ${toCurrency}</div>
+            <div class="result-fee">Fee: ${feeInFromCurrency} ${fromCurrency} (0.25%)</div>
+            <p>1 ${fromCurrency} = ${(rates[toCurrency]/rates[fromCurrency]).toFixed(4)} ${toCurrency}</p>
+            <p>1 ${toCurrency} = ${(rates[fromCurrency]/rates[toCurrency]).toFixed(4)} ${fromCurrency}</p>
+          `;
+          
+          // Hide loader and show result
+          document.getElementById('loader').style.display = 'none';
+          resultElement.style.display = 'block';
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>
