@@ -203,7 +203,29 @@
           <div class="explanation">We'll send account updates and verification links here.</div>
 
           <label for="dob">Date of Birth</label>
-          <input type="date" name="dob" required>
+          <div style="display: flex; gap: 10px;">
+            <select name="dobDay" required style="flex: 1;">
+              <option value="">Day</option>
+            </select>
+            <select name="dobMonth" required style="flex: 1;">
+              <option value="">Month</option>
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <select name="dobYear" required style="flex: 1;">
+              <option value="">Year</option>
+            </select>
+          </div>
           <div class="explanation">Your birth date helps us comply with age-related regulations.</div>
 
           <label for="nationality">Nationality</label>
@@ -218,9 +240,14 @@
           <label for="country">Country</label>
           <select name="country" required onchange="loadCities(this.value)">
             <option value="">-- Select Country --</option>
-            <option value="Senegal">Senegal</option>
-            <option value="UAE">UAE</option>
+            <option value="Armenia">Armenia</option>
+            <option value="Brasil">Brasil</option>
             <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="Japan">Japan</option>
+            <option value="Senegal">Senegal</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United States of America">United States of America</option>
           </select>
           <div class="explanation">Your country determines available services and compliance requirements.</div>
 
@@ -372,6 +399,33 @@
   
     // Initialize progress bar
     updateProgressBar();
+
+    // Populate day dropdown (1-31)
+    function populateDays() {
+      const daySelect = document.querySelector('select[name="dobDay"]');
+      for (let i = 1; i <= 31; i++) {
+        const option = document.createElement('option');
+        option.value = i.toString().padStart(2, '0');
+        option.textContent = i;
+        daySelect.appendChild(option);
+      }
+    }
+
+    // Populate year dropdown (1940-2010)
+    function populateYears() {
+      const yearSelect = document.querySelector('select[name="dobYear"]');
+      const currentYear = new Date().getFullYear();
+      for (let i = currentYear - 15; i >= currentYear - 85; i--) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        yearSelect.appendChild(option);
+      }
+    }
+
+    // Initialize date dropdowns
+    populateDays();
+    populateYears();
   
     // Submit handler
     document.getElementById('signupForm').addEventListener('submit', function (e) {
