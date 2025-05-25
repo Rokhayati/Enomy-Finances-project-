@@ -893,5 +893,33 @@
         }
     });
 </script>
+
+    <script>
+  async function loadUserProfile() {
+    try {
+      const response = await fetch('/api/profile');
+      if (!response.ok) throw new Error('Not authenticated');
+
+      const data = await response.json();
+      const user = data.user;
+
+      // Inject data into modal fields
+      document.getElementById('profileName').textContent = user.username;
+      document.getElementById('profileEmail').textContent = user.email;
+
+      if (user.profile_pic) {
+        document.getElementById('profilePic').src = user.profile_pic;
+      }
+
+    } catch (err) {
+      console.error('Not logged in or error loading profile:', err);
+      window.location.href = '/login.html';
+    }
+  }
+
+  // Call on load
+  window.addEventListener('DOMContentLoaded', loadUserProfile);
+</script>
+
 </body>
 </html>
