@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure Payment - Enomy Finance</title>
+  <link rel="stylesheet" href="Savings_files/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background-image: url('images/gradient.png');
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--dark);
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    
+    .payment-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+    
+    .step {
+      display: flex;
+      align-items: center;
+      margin: 0 1rem;
+    }
+    
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .step.active .step-number {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .step.completed .step-number {
+      background: #28a745;
+      color: white;
+    }
+    
+    .step-line {
+      width: 50px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      margin: 0 1rem;
+    }
+    
+    .logo {
+      display: block;
+      margin: 2rem auto;
+      max-width: 120px;
+      border-radius: 8px;
+    }
+    
+    .payment-content {
+      padding: 0 3rem 3rem;
+    }
+    
+    .step-content {
+      display: none;
+    }
+    
+    .step-content.active {
+      display: block;
+    }
+    
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .plan-card {
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .plan-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 106, 0, 0.15);
+    }
+    
+    .plan-card.selected {
+      border-color: var(--primary);
+      background: rgba(255, 106, 0, 0.05);
+    }
+    
+    .plan-card.popular::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 5px 20px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .plan-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .plan-price {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .plan-period {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    
+    .plan-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+    
+    .plan-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .plan-features li:last-child {
+      border-bottom: none;
+    }
+    
+    .plan-features i {
+      color: #28a745;
+      margin-right: 0.5rem;
+    }
+    
+    .payment-main {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .payment-form {
+      padding: 2rem;
+    }
+    
+    .payment-sidebar {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 1rem;
+      height: fit-content;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--gray);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: white;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.1);
+    }
+    
+    .input-icon {
+      position: relative;
+    }
+    
+    .input-icon i {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+    
+    .card-preview {
+      background: linear-gradient(135deg, #4a5568, #2d3748);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card-preview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: translate(30%, -30%);
+    }
+    
+    .card-brand {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    
+    .card-number {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+    
+    .card-details {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+    
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .payment-method {
+      flex: 1;
+      padding: 1rem;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .payment-method.active {
+      border-color: var(--primary);
+      background: rgba(255, 106, 0, 0.05);
+    }
+    
+    .payment-method i {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 106, 0, 0.3);
+    }
+    
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .order-summary {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .order-summary h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .summary-line.total {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      padding-top: 0.5rem;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .processing-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .processing-card {
+      background: white;
+      padding: 3rem;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 400px;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .success-message {
+      display: none;
+      text-align: center;
+      color: #28a745;
+      font-weight: bold;
+      padding: 1rem;
+      background: #d4edda;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .payment-wrapper {
+        margin: 1rem;
+      }
+      
+      .payment-content {
+        padding: 2rem;
+      }
+      
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .payment-main {
+        grid-template-columns: 1fr;
+      }
+      
+      .payment-sidebar {
+        order: -1;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .step-indicator {
+        padding: 1rem;
+      }
+      
+      .step-line {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-wrapper">
+    <div class="step-indicator">
+      <div class="step active" id="step1-indicator">
+        <div class="step-number">1</div>
+        <span>Choose Plan</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step2-indicator">
+        <div class="step-number">2</div>
+        <span>Payment Details</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step3-indicator">
+        <div class="step-number">3</div>
+        <span>Confirmation</span>
+      </div>
+    </div>
+    
+    <img src="images/log.jpg" alt="Enomy Logo" class="logo" />
+    
+    <div class="payment-content">
+      <!-- Step 1: Plan Selection -->
+      <div class="step-content active" id="step1">
+        <h1 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">Choose Your Enomy Plan</h1>
+        
+        <div class="plans-grid">
+          <div class="plan-card" data-plan="basic" data-price="9.99">
+            <div class="plan-icon">
+              <i class="fas fa-piggy-bank"></i>
+            </div>
+            <div class="plan-name">Basic Savings Plan</div>
+            <div class="plan-price">$9.99</div>
+            <div class="plan-period">/month</div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Personal budgeting tools</li>
+              <li><i class="fas fa-check"></i> Expense tracking</li>
+              <li><i class="fas fa-check"></i> Savings goals</li>
+              <li><i class="fas fa-check"></i> Basic financial education</li>
+              <li><i class="fas fa-check"></i> Email support</li>
+            </ul>
+          </div>
+          
+          <div class="plan-card popular" data-plan="premium" data-price="19.99">
+            <div class="plan-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="plan-name">Enomy Premium Learning</div>
+            <div class="plan-price">$19.99</div>
+            <div class="plan-period">/month</div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Everything in Basic</li>
+              <li><i class="fas fa-check"></i> Advanced analytics</li>
+              <li><i class="fas fa-check"></i> Premium courses & webinars</li>
+              <li><i class="fas fa-check"></i> Personal finance coach</li>
+              <li><i class="fas fa-check"></i> Priority support</li>
+              <li><i class="fas fa-check"></i> Custom reports</li>
+            </ul>
+          </div>
+          
+          <div class="plan-card" data-plan="plus" data-price="29.99">
+            <div class="plan-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="plan-name">Savings Plan Plus</div>
+            <div class="plan-price">$29.99</div>
+            <div class="plan-period">/month</div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Everything in Premium</li>
+              <li><i class="fas fa-check"></i> Investment tracking</li>
+              <li><i class="fas fa-check"></i> Portfolio analysis</li>
+              <li><i class="fas fa-check"></i> Tax optimization tools</li>
+              <li><i class="fas fa-check"></i> Unlimited transactions</li>
+              <li><i class="fas fa-check"></i> Family account sharing</li>
+            </ul>
+          </div>
+          
+          <div class="plan-card" data-plan="investment" data-price="49.99">
+            <div class="plan-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="plan-name">Management Stock Investment</div>
+            <div class="plan-price">$49.99</div>
+            <div class="plan-period">/month</div>
+            <ul class="plan-features">
+              <li><i class="fas fa-check"></i> Everything in Plus</li>
+              <li><i class="fas fa-check"></i> Professional portfolio management</li>
+              <li><i class="fas fa-check"></i> Real-time stock alerts</li>
+              <li><i class="fas fa-check"></i> Advanced market analysis</li>
+              <li><i class="fas fa-check"></i> Direct advisor access</li>
+              <li><i class="fas fa-check"></i> Automated rebalancing</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+          <button class="btn" onclick="nextStep()" id="plan-continue-btn" disabled>Continue to Payment</button>
+        </div>
+      </div>
+      
+      <!-- Step 2: Payment Details -->
+      <div class="step-content" id="step2">
+        <div class="payment-main">
+          <div class="payment-form">
+            <h2 style="color: var(--primary); margin-bottom: 2rem;">Payment Information</h2>
+            
+            <div class="security-badge" style="background: #e8f5e8; color: #2d7d2d;">
+              <i class="fas fa-shield-alt"></i>
+              Your payment information is encrypted and secure
+            </div>
+            
+            <div class="payment-methods">
+              <div class="payment-method active" data-method="card">
+                <i class="fas fa-credit-card"></i>
+                Card
+              </div>
+              <div class="payment-method" data-method="paypal">
+                <i class="fab fa-paypal"></i>
+                PayPal
+              </div>
+              <div class="payment-method" data-method="apple">
+                <i class="fab fa-apple-pay"></i>
+                Apple Pay
+              </div>
+            </div>
+            
+            <div class="card-preview">
+              <div class="card-brand">VISA</div>
+              <div class="card-number" id="previewNumber">•••• •••• •••• ••••</div>
+              <div class="card-details">
+                <span id="previewName">CARDHOLDER NAME</span>
+                <span id="previewExpiry">MM/YY</span>
+              </div>
+            </div>
+            
+            <form id="paymentForm">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="your@email.com" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="cardName">Cardholder Name</label>
+                <input type="text" id="cardName" placeholder="John Doe" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <div class="input-icon">
+                  <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19" />
+                  <i class="fas fa-credit-card"></i>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date</label>
+                  <input type="text" id="expiry" placeholder="MM/YY" required maxlength="5" />
+                </div>
+                <div class="form-group">
+                  <label for="cvv">Security Code</label>
+                  <div class="input-icon">
+                    <input type="text" id="cvv" placeholder="123" required maxlength="4" />
+                    <i class="fas fa-lock"></i>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" required>
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="DE">Germany</option>
+                  <option value="FR">France</option>
+                  <option value="AU">Australia</option>
+                </select>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="zipCode">ZIP/Postal Code</label>
+                  <input type="text" id="zipCode" placeholder="12345" required />
+                </div>
+                <div class="form-group">
+                  <label for="state">State/Province</label>
+                  <input type="text" id="state" placeholder="State" />
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="submit" class="btn">
+                  <i class="fas fa-lock"></i>
+                  Complete Secure Payment
+                </button>
+              </div>
+              
+              <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                Payment successful! Redirecting to your dashboard...
+              </div>
+            </form>
+          </div>
+          
+          <div class="payment-sidebar">
+            <div class="order-summary">
+              <h3>Order Summary</h3>
+              <div class="summary-line">
+                <span id="selected-plan-name">Select a plan</span>
+                <span id="selected-plan-price">$0.00</span>
+              </div>
+              <div class="summary-line">
+                <span>Tax</span>
+                <span id="tax-amount">$0.00</span>
+              </div>
+              <div class="summary-line">
+                <span>Processing Fee</span>
+                <span>$0.99</span>
+              </div>
+              <div class="summary-line total">
+                <span>Total</span>
+                <span id="total-amount">$0.99</span>
+              </div>
+            </div>
+            
+            <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 2rem;">
+              <p><i class="fas fa-crown"></i> Your Plan Includes:</p>
+              <ul id="plan-benefits" style="margin-left: 1rem; margin-top: 0.5rem;">
+                <li>Select a plan to see benefits</li>
+              </ul>
+            </div>
+            
+            <div class="security-badge">
+              <i class="fas fa-shield-alt"></i>
+              256-bit SSL encryption
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="processing-overlay" id="processingOverlay">
+    <div class="processing-card">
+      <div class="spinner"></div>
+      <h3>Processing Payment...</h3>
+      <p>Please do not close this window</p>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    let selectedPlan = null;
+    
+    const plans = {
+      basic: {
+        name: 'Basic Savings Plan',
+        price: 9.99,
+        benefits: ['Personal budgeting tools', 'Expense tracking', 'Savings goals', 'Basic financial education']
+      },
+      premium: {
+        name: 'Enomy Premium Learning',
+        price: 19.99,
+        benefits: ['Everything in Basic', 'Advanced analytics', 'Premium courses', 'Personal finance coach']
+      },
+      plus: {
+        name: 'Savings Plan Plus',
+        price: 29.99,
+        benefits: ['Everything in Premium', 'Investment tracking', 'Portfolio analysis', 'Tax optimization']
+      },
+      investment: {
+        name: 'Management Stock Investment',
+        price: 49.99,
+        benefits: ['Everything in Plus', 'Portfolio management', 'Real-time alerts', 'Direct advisor access']
+      }
+    };
+    
+    // Plan selection
+    document.querySelectorAll('.plan-card').forEach(card => {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+        
+        selectedPlan = this.dataset.plan;
+        updateOrderSummary();
+        document.getElementById('plan-continue-btn').disabled = false;
+      });
+    });
+    
+    function updateOrderSummary() {
+      if (!selectedPlan) return;
+      
+      const plan = plans[selectedPlan];
+      const tax = plan.price * 0.1; // 10% tax
+      const processingFee = 0.99;
+      const total = plan.price + tax + processingFee;
+      
+      document.getElementById('selected-plan-name').textContent = plan.name;
+      document.getElementById('selected-plan-price').textContent = `$${plan.price.toFixed(2)}`;
+      document.getElementById('tax-amount').textContent = `$${tax.toFixed(2)}`;
+      document.getElementById('total-amount').textContent = `$${total.toFixed(2)}`;
+      
+      // Update benefits
+      const benefitsList = document.getElementById('plan-benefits');
+      benefitsList.innerHTML = plan.benefits.map(benefit => `<li>${benefit}</li>`).join('');
+    }
+    
+    function nextStep() {
+      if (currentStep === 1 && !selectedPlan) return;
+      
+      // Update step indicators
+      document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+      document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      
+      currentStep++;
+      
+      document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+      document.getElementById(`step${currentStep}`).classList.add('active');
+    }
+    
+    function prevStep() {
+      document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      
+      currentStep--;
+      
+      document.getElementById(`step${currentStep}-indicator`).classList.remove('completed');
+      document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+      document.getElementById(`step${currentStep}`).classList.add('active');
+    }
+    
+    // Card number formatting
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+      
+      document.getElementById('previewNumber').textContent = 
+        formattedValue || '•••• •••• •••• ••••';
+      
+      let firstDigit = value.charAt(0);
+      let cardBrand = document.querySelector('.card-brand');
+      if (firstDigit === '4') cardBrand.textContent = 'VISA';
+      else if (firstDigit === '5') cardBrand.textContent = 'MASTERCARD';
+      else if (firstDigit === '3') cardBrand.textContent = 'AMEX';
+      else cardBrand.textContent = 'CARD';
+    });
+    
+    // Expiry date formatting
+    document.getElementById('expiry').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0,2) + '/' + value.substring(2,4);
+      }
+      e.target.value = value;
+      document.getElementById('previewExpiry').textContent = value || 'MM/YY';
+    });
+    
+    // Cardholder name update
+    document.getElementById('cardName').addEventListener('input', function(e) {
+      document.getElementById('previewName').textContent = 
+        e.target.value.toUpperCase() || 'CARDHOLDER NAME';
+    });
+    
+    // CVV validation
+    document.getElementById('cvv').addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/\D/g, '');
+    });
+    
+    // Payment method selection
+    document.querySelectorAll('.payment-method').forEach(method => {
+      method.addEventListener('click', function() {
+        document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    
+    // Form submission
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      document.getElementById('processingOverlay').style.display = 'flex';
+      
+      setTimeout(() => {
+        document.getElementById('processingOverlay').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+        
+        setTimeout(() => {
+          window.location.href = 'enomy.html';
+        }, 3000);
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
