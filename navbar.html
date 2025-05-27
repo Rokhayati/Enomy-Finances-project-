@@ -5,8 +5,7 @@
     <title>Enomy-Finances</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="Savings_files/style.css">
-  <style>
+    <style>
      /* Navbar Styles */
         .navbar {
             display: flex;
@@ -453,6 +452,7 @@
         <a href="Savings_files/about_us.html">About Us</a>
         <a href="Savings_files/rates.html">Rates</a>
         <a href="Savings_files/services.html">Services</a>
+        <a href="CurrencyConversion.html">Currency Convertor</a>
         <a href="Savings_files/investement_into.html">Calculator</a>
         <a href="Savings_files/contact.html">Contact</a>
     </div>
@@ -460,55 +460,46 @@
     <div class="navbar-right">
         <a href="signup.html" id="signup-link"><button id="signup-btn" class="btn btn-signup">Sign Up</button></a>
         <a href="login.html" id="login-link"><button id="login-btn" class="btn btn-login">Log In</button></a>
-        
-             <!-- Search icon -->
-    <div class="search-icon" onclick="window.location.href='finance-news.html';">  
-    </div></div>
-    <div class="search-icon" onclick="window.location.href='finance-news.html';">🔍</div>
         <!-- Profile icon -->
         <div id="profile-icon" title="My Profile" onclick="toggleSidebar()"></div>
-        <div id="profile-name" style="color: white; font-size: 12px; margin-top: 5px;"></div>
     </div>
-    
+    <div class="search-icon" onclick="window.location.href='finance-news.html';">🔍</div>
 </nav>
 
-<!-- Overlay -->
-<div id="overlay" onclick="closeSidebar()"></div>
+<!-- Overlay for sidebar -->
+<div id="overlay"></div>
 
-<!-- Sidebar Menu -->
+<!-- Sidebar -->
 <div id="sidebar">
     <div class="sidebar-header">
-        <h2>Enomy</h2>
-        <span class="close-sidebar" onclick="closeSidebar()">×</span>
+        <h2>My Account</h2>
+        <div class="close-sidebar" onclick="closeSidebar()"><i class="fas fa-times"></i></div>
     </div>
     
     <div class="sidebar-user">
-        <div class="sidebar-user-avatar" id="sidebar-avatar"></div>
+        <div id="sidebar-avatar" class="sidebar-user-avatar" style="background-image: url('https://cdn-icons-png.flaticon.com/512/847/847969.png');"></div>
         <div class="sidebar-user-info">
             <h3 id="sidebar-username">Username</h3>
-            <p>Member since <span id="member-since">2025</span></p>
+            <p id="sidebar-email">user@example.com</p>
         </div>
     </div>
     
     <div class="sidebar-section">
-        <div class="sidebar-section-title">Financial Tools</div>
-        <a href="CurrencyConversion.html"><i class="fas fa-exchange-alt"></i> Currency Converter</a>
-        <a href="basic-savings-plan.html"><i class="fas fa-piggy-bank"></i> Basic Savings Plan</a>
-        <a href="savings-plan-plus.html"><i class="fas fa-chart-line"></i> Savings Plan Plus</a>
-        <a href="management-stock-investment.html"><i class="fas fa-chart-pie"></i> Managed Stock Investment</a>
-        <a href="Savings_files/investement_into.html"><i class="fas fa-calculator"></i> Investment Calculator</a>
+        <div class="sidebar-section-title">Account</div>
+        <a href="#" onclick="openModal('profile-modal')"><i class="fas fa-user"></i> Edit Profile</a>
+        <a href="#" onclick="openModal('password-modal')"><i class="fas fa-key"></i> Change Password</a>
     </div>
     
     <div class="sidebar-section">
-        <div class="sidebar-section-title">Account</div>
-        <a href="#" id="my-profile-link" onclick="openModal('profile-modal')"><i class="fas fa-user"></i> My Profile</a>
-        <a href="#" id="settings-link" onclick="openModal('settings-modal')"><i class="fas fa-cog"></i> Settings</a>
-        <a href="#" id="change-password-link" onclick="openModal('change-password-modal')"><i class="fas fa-key"></i> Change Password</a>
-        <a href="#" id="delete-account-link" onclick="openModal('delete-account-modal')"><i class="fas fa-trash-alt"></i> Delete Account</a>
+        <div class="sidebar-section-title">Settings</div>
+        <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="#"><i class="fas fa-shield-alt"></i> Privacy & Security</a>
+        <a href="#"><i class="fas fa-cog"></i> Preferences</a>
     </div>
     
     <div class="sidebar-footer">
-        <a href="/logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="#" id="delete-account-btn" style="color: #dc3545;"><i class="fas fa-trash-alt"></i> Delete Account</a>
     </div>
 </div>
 
@@ -516,192 +507,94 @@
 <div id="profile-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>My Profile</h3>
-            <button class="modal-close" onclick="closeModal('profile-modal')">&times;</button>
+            <h3>Edit Profile</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         
-        <div class="profile-section">
-            <div class="profile-pic-container">
-                <img id="current-profile-pic" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile Picture" class="profile-pic">
-                <form id="profile-form" enctype="multipart/form-data" action="/upload-profile-pic" method="POST">
-                    <label for="profile-pic" class="btn btn-form">Change Profile Picture</label>
-                    <input type="file" id="profile-pic" name="profile-pic" accept="image/*" style="display: none;" onchange="previewImage(this)"/>
-                    <button type="submit" class="btn btn-form" style="margin-top: 10px;">Save Picture</button>
-                </form>
+        <form id="profile-form">
+            <div class="profile-section">
+                <div class="profile-pic-container">
+                    <img id="profile-pic" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile Picture" class="profile-pic">
+                    <input type="file" id="profile-pic-upload" accept="image/*" style="display: none;">
+                    <button type="button" class="btn-form" style="width: auto;" onclick="document.getElementById('profile-pic-upload').click()">Change Picture</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" class="form-control" disabled>
-            </div>
-            
-            <div class="form-group">
-                <label for="joined-date">Member Since</label>
-                <input type="text" id="joined-date" class="form-control" disabled>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Settings Modal -->
-<div id="settings-modal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Account Settings</h3>
-            <button class="modal-close" onclick="closeModal('settings-modal')">&times;</button>
-        </div>
-        
-        <form id="settings-form">
-            <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" class="form-control">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" class="form-control">
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" class="form-control">
-            </div>
-            
-            <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <input type="date" id="dob" class="form-control">
-            </div>
-            
-            <div class="form-group">
-                <label for="gender">Gender</label>
-                <select id="gender" class="form-control">
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="non-binary">Non-binary</option>
-                    <option value="prefer-not">Prefer not to say</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="location">Location</label>
-                <input type="text" id="location" class="form-control">
-            </div>
-            
-            <button type="button" class="btn btn-form" onclick="saveSettings()">Save Changes</button>
+            <button type="submit" class="btn-form">Save Changes</button>
         </form>
     </div>
 </div>
 
-<!-- Change Password Modal -->
-<div id="change-password-modal" class="modal">
+<!-- Password Modal -->
+<div id="password-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Change Password</h3>
-            <button class="modal-close" onclick="closeModal('change-password-modal')">&times;</button>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         
         <form id="password-form">
-            <div class="form-group">
+            <div class="form-group password-container">
                 <label for="current-password">Current Password</label>
-                <input type="password" id="current-password" class="form-control">
+                <input type="password" id="current-password" class="form-control" required>
+                <i class="toggle-password fas fa-eye-slash" onclick="togglePasswordVisibility('current-password', this)"></i>
             </div>
             
-            <div class="form-group">
+            <div class="form-group password-container">
                 <label for="new-password">New Password</label>
-                <input type="password" id="new-password" class="form-control">
+                <input type="password" id="new-password" class="form-control" required>
+                <i class="toggle-password fas fa-eye-slash" onclick="togglePasswordVisibility('new-password', this)"></i>
             </div>
             
-            <div class="form-group">
+            <div class="form-group password-container">
                 <label for="confirm-password">Confirm New Password</label>
-                <input type="password" id="confirm-password" class="form-control">
+                <input type="password" id="confirm-password" class="form-control" required>
+                <i class="toggle-password fas fa-eye-slash" onclick="togglePasswordVisibility('confirm-password', this)"></i>
             </div>
             
-            <button type="button" class="btn btn-form" onclick="changePassword()">Update Password</button>
+            <button type="submit" class="btn-form">Update Password</button>
         </form>
     </div>
 </div>
 
-<!-- Delete Account Modal -->
-<div id="delete-account-modal" class="modal">
+<!-- Delete Confirmation Modal -->
+<div id="delete-confirmation-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Delete Account</h3>
-            <button class="modal-close" onclick="closeModal('delete-account-modal')">&times;</button>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
         
-        <div class="alert alert-danger" style="padding: 15px; background-color: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.3); border-radius: 5px; margin-bottom: 20px;">
-            <p><strong>Warning:</strong> This action is permanent and cannot be undone. All your data will be permanently removed.</p>
-        </div>
+        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
         
-        <form id="delete-form">
-            <div class="form-group">
-                <label for="delete-reason">Reason for leaving (optional)</label>
-                <textarea id="delete-reason" class="form-control" rows="3"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="delete-password">Enter your password to confirm</label>
-                <input type="password" id="delete-password" class="form-control">
-            </div>
-            
-            <button type="button" class="btn btn-form btn-danger" onclick="deleteAccount()">Delete My Account</button>
-        </form>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn-form" style="background-color: #555;" onclick="closeModal()">Cancel</button>
+            <button id="confirm-delete-btn" class="btn-form btn-danger">Delete Account</button>
+        </div>
     </div>
 </div>
 
-  <script>
-    // Check if user is logged in and update UI accordingly
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if user is logged in (either via Flask session or local storage)
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' || localStorage.getItem('isLoggedIn') === 'true';
-        
-        if (isLoggedIn) {
-            // Hide login/signup buttons
-            document.getElementById('signup-link').style.display = 'none';
-            document.getElementById('login-link').style.display = 'none';
-            
-            // Show profile icon
-            const profileIcon = document.getElementById('profile-icon');
-            profileIcon.style.display = 'block';
-            
-            // Set user data in sidebar and profile modal
-            const username = sessionStorage.getItem('username') || localStorage.getItem('username') || 'User';
-            const profilePic = sessionStorage.getItem('profilePic') || localStorage.getItem('profilePic');
-            const email = sessionStorage.getItem('email') || localStorage.getItem('email') || 'user@example.com';
-            const joinedDate = sessionStorage.getItem('joinedDate') || localStorage.getItem('joinedDate') || 'January 2025';
-            
-            // Set username in sidebar and profile
-            document.getElementById('sidebar-username').textContent = username;
-            document.getElementById('display-username').value = username;
-            document.getElementById('joined-date').value = joinedDate;
-            document.getElementById('member-since').textContent = joinedDate;
-            
-            if (document.getElementById('fullname')) {
-                document.getElementById('fullname').value = username;
-            }
-            
-            if (document.getElementById('email')) {
-                document.getElementById('email').value = email;
-            }
-            
-            // Set profile picture if available
-            if (profilePic && profilePic !== '') {
-                const picUrl = profilePic.startsWith('http') ? profilePic : '/uploads/' + profilePic;
-                document.getElementById('sidebar-avatar').style.backgroundImage = `url('${picUrl}')`;
-                document.getElementById('current-profile-pic').src = picUrl;
-                profileIcon.style.backgroundImage = `url('${picUrl}')`;
-            }
-        }
-        
-        // Set current year in footer
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-    });
-    
-    // Sidebar toggle functions
+<!-- Main Content -->
+<div class="content-wrapper">
+    <!-- Your main content here -->
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Utility functions
     function toggleSidebar() {
-        document.getElementById('sidebar').classList.add('open');
-        document.getElementById('overlay').classList.add('active');
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('active');
     }
     
     function closeSidebar() {
@@ -709,217 +602,207 @@
         document.getElementById('overlay').classList.remove('active');
     }
     
-    // Modal functions
     function openModal(modalId) {
-        closeSidebar();
         document.getElementById(modalId).classList.add('modal-active');
     }
     
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove('modal-active');
-    }
-
-    
-    // Profile picture preview
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                document.getElementById('current-profile-pic').src = e.target.result;
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-        }
+    function closeModal() {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => modal.classList.remove('modal-active'));
     }
     
-    // Profile form submission - modified to handle the profile picture upload
-    document.getElementById('profile-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        
-        fetch('/upload-profile-pic', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Update profile pictures throughout the interface
-                const picUrl = data.imageUrl;
-                document.getElementById('profile-icon').style.backgroundImage = `url('${picUrl}')`;
-                document.getElementById('sidebar-avatar').style.backgroundImage = `url('${picUrl}')`;
-                
-                // Store in session and local storage
-                sessionStorage.setItem('profilePic', picUrl);
-                localStorage.setItem('profilePic', picUrl);
-                
-                alert('Profile picture updated successfully!');
-                closeModal('profile-modal');
-            } else {
-                alert('Error updating profile picture: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while updating your profile picture.');
-        });
-    });
-    
-    // Function to save settings
-    function saveSettings() {
-        const fullname = document.getElementById('fullname').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const location = document.getElementById('location').value;
-        
-        // Store in session and local storage
-        sessionStorage.setItem('username', fullname);
-        localStorage.setItem('username', fullname);
-        sessionStorage.setItem('email', email);
-        localStorage.setItem('email', email);
-        
-        // Update UI elements
-        document.getElementById('sidebar-username').textContent = fullname;
-        document.getElementById('display-username').value = fullname;
-        
-        // In a real app, you would send this data to the server
-        // For demo purposes, show success message
-        alert('Settings saved successfully!');
-        closeModal('settings-modal');
-    }
-    
-    // Toggle password visibility
-    function togglePasswordVisibility(inputId) {
+    function togglePasswordVisibility(inputId, icon) {
         const input = document.getElementById(inputId);
-        const icon = input.nextElementSibling;
-        
         if (input.type === 'password') {
             input.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            input.type = 'password';
             icon.classList.remove('fa-eye-slash');
             icon.classList.add('fa-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
         }
     }
     
-    // Function to verify current password
-    function verifyCurrentPassword() {
-        const currentPassword = document.getElementById('current-password').value;
-        
-        if (!currentPassword) {
-            alert('Please enter your current password');
-            return;
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            // Fetch user profile
+            const response = await fetch('/api/profile');
+            
+            if (response.ok) {
+                // User is logged in
+                const data = await response.json();
+                const user = data.user;
+                
+                // Update UI for logged in state
+                document.getElementById('signup-link').style.display = 'none';
+                document.getElementById('login-link').style.display = 'none';
+                document.getElementById('profile-icon').style.display = 'block';
+                
+                // Update sidebar user info
+                document.getElementById('sidebar-username').textContent = user.username;
+                document.getElementById('sidebar-email').textContent = user.email;
+                
+                // Update avatar if user has a profile pic
+                if (user.profile_pic) {
+                    const avatarUrl = user.profile_pic;
+                    document.getElementById('sidebar-avatar').style.backgroundImage = `url('${avatarUrl}')`;
+                    document.getElementById('profile-icon').style.backgroundImage = `url('${avatarUrl}')`;
+                    document.getElementById('profile-pic').src = avatarUrl;
+                }
+                
+                // Set form values
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.email;
+            } else {
+                // User is not logged in
+                document.getElementById('signup-link').style.display = 'inline-block';
+                document.getElementById('login-link').style.display = 'inline-block';
+                document.getElementById('profile-icon').style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
         }
         
-        // In a real app, you would verify with the server
-        // For demo, we'll simulate a successful verification
-        document.getElementById('new-password').disabled = false;
-        document.getElementById('confirm-password').disabled = false;
-        document.getElementById('verify-password-btn').style.display = 'none';
-        document.getElementById('change-password-btn').style.display = 'block';
+        // Setup event listeners
+        document.getElementById('overlay').addEventListener('click', closeSidebar);
         
-        alert('Password verified! You can now set a new password.');
-    }
-    
-    // Function to change password
-    function changePassword() {
-        const newPassword = document.getElementById('new-password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
+        // Profile form submit
+        document.getElementById('profile-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            
+            try {
+                const response = await fetch('/api/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email })
+                });
+                
+                if (response.ok) {
+                    // Update sidebar with new info
+                    document.getElementById('sidebar-username').textContent = username;
+                    document.getElementById('sidebar-email').textContent = email;
+                    
+                    // Close modal
+                    closeModal();
+                    
+                    // Show success message
+                    alert('Profile updated successfully!');
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.error || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile. Please try again.');
+            }
+        });
         
-        if (!newPassword) {
-            alert('Please enter a new password');
-            return;
-        }
+        // Password form submit
+        document.getElementById('password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/change-password', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
+                
+                if (response.ok) {
+                    // Reset form
+                    this.reset();
+                    
+                    // Close modal
+                    closeModal();
+                    
+                    // Show success message
+                    alert('Password changed successfully!');
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.error || 'Failed to change password');
+                }
+            } catch (error) {
+                console.error('Error changing password:', error);
+                alert('Error changing password. Please try again.');
+            }
+        });
         
-        if (newPassword !== confirmPassword) {
-            alert('New passwords do not match');
-            return;
-        }
+        // Logout button
+        document.getElementById('logout-btn').addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Failed to logout. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error logging out:', error);
+                alert('Error logging out. Please try again.');
+            }
+        });
         
-        // In a real app, you would send this data to the server
-        // For demo purposes, show success message
-        alert('Password updated successfully!');
-        closeModal('change-password-modal');
+        // Delete account button
+        document.getElementById('confirm-delete-btn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/api/delete-account', {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    window.location.href = 'signup.html';
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.error || 'Failed to delete account');
+                }
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                alert('Error deleting account. Please try again.');
+            }
+        });
         
-        // Reset the form for next time
-        document.getElementById('current-password').value = '';
-        document.getElementById('new-password').value = '';
-        document.getElementById('confirm-password').value = '';
-        document.getElementById('new-password').disabled = true;
-        document.getElementById('confirm-password').disabled = true;
-        document.getElementById('verify-password-btn').style.display = 'block';
-        document.getElementById('change-password-btn').style.display = 'none';
-    }
-    
-    // Function to delete account
-    function deleteAccount() {
-        const password = document.getElementById('delete-password').value;
-        
-        if (!password) {
-            alert('Please enter your password to confirm account deletion');
-            return;
-        }
-        
-        // In a real app, you would send this data to the server
-        // For demo purposes, log out the user
-        sessionStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('isLoggedIn');
-        sessionStorage.removeItem('username');
-        localStorage.removeItem('username');
-        sessionStorage.removeItem('email');
-        localStorage.removeItem('email');
-        sessionStorage.removeItem('profilePic');
-        localStorage.removeItem('profilePic');
-        
-        alert('Your account has been deleted. You will be logged out.');
-        window.location.href = 'logout.html';
-    }
-    
-    // Allow editing of username in profile modal
-    document.getElementById('display-username').addEventListener('change', function() {
-        const newUsername = this.value;
-        document.getElementById('sidebar-username').textContent = newUsername;
-        
-        // Store in session and local storage
-        sessionStorage.setItem('username', newUsername);
-        localStorage.setItem('username', newUsername);
-        
-        // Also update fullname in settings if opened later
-        if (document.getElementById('fullname')) {
-            document.getElementById('fullname').value = newUsername;
-        }
+        // Profile picture upload
+        document.getElementById('profile-pic-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imgUrl = event.target.result;
+                
+                // Update UI immediately
+                document.getElementById('profile-pic').src = imgUrl;
+                document.getElementById('sidebar-avatar').style.backgroundImage = `url('${imgUrl}')`;
+                document.getElementById('profile-icon').style.backgroundImage = `url('${imgUrl}')`;
+                
+                // TODO: Upload to server (would require additional backend endpoint)
+            };
+            reader.readAsDataURL(file);
+        });
     });
-</script>
-
-<script>
-  async function loadUserProfile() {
-    try {
-      const response = await fetch('/api/profile');
-      if (!response.ok) throw new Error('Not authenticated');
-
-      const data = await response.json();
-      const user = data.user;
-
-      // Inject data into modal fields
-      document.getElementById('profileName').textContent = user.username;
-      document.getElementById('profileEmail').textContent = user.email;
-
-      if (user.profile_pic) {
-        document.getElementById('profilePic').src = user.profile_pic;
-      }
-
-    } catch (err) {
-      console.error('Not logged in or error loading profile:', err);
-      window.location.href = '/login.html';
-    }
-  }
-
-  // Call on load
-  window.addEventListener('DOMContentLoaded', loadUserProfile);
 </script>
 
 </body>
